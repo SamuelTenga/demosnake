@@ -103,11 +103,11 @@ function move(gameState) {
   };
 
 
-  const isUpSafe = Object.keys(myBody).filter(key => key.x == nextMoveUp.x && key.y == nextMoveUp.y);
-  const isDownSafe = Object.keys(myBody).filter(key => key === nextMoveDown);
-  const isLeftSafe = Object.keys(myBody).filter(key => key === nextMoveLeft);
-  const isRightSafe = Object.keys(myBody).filter(key => key === nextMoveRight);
-  console.log(`isUpSafe ${isUpSafe}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.x} `);
+  const isUpSafe = myBody.filter(key => key.x == nextMoveUp.x && key.y == nextMoveUp.y);
+  const isDownSafe = myBody.filter(key => key === nextMoveDown);
+  const isLeftSafe = myBody.filter(key => key === nextMoveLeft);
+  const isRightSafe = myBody.filter(key => key === nextMoveRight);
+  console.log(`isUpSafe ${isUpSafe}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y} `);
   console.log(`isUpSafe ${isDownSafe}, nextMoveUp= ${nextMoveDown} `);
   console.log(`isUpSafe ${isLeftSafe}, nextMoveUp= ${nextMoveLeft} `);
   console.log(`isUpSafe ${isRightSafe}, nextMoveUp= ${nextMoveRight} `);
