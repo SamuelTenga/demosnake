@@ -69,16 +69,15 @@ function move(gameState) {
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   var boardWidth = gameState.board.width;
   var boardHeight = gameState.board.height;
-  if (myHead.y == 0) {        // Neck is left of head, don't move left
-    isMoveSafe.down = false;
+  if (myHead.y == 0) {       
     console.log(`remove dwon - border`);
-  } else if (myHead.y == boardHeight-1) { // Neck is right of head, don't move right
+  } else if (myHead.y == boardHeight) { 
     isMoveSafe.up = false;
     console.log(`remove up - border`);
-  } else if (myHead.x == boardWidth-1) { // Neck is right of head, don't move right
+  } else if (myHead.x == boardWidth) { 
     isMoveSafe.right = false;
     console.log(`remove right - border`);
-  } else if (myHead.x == 0) { // Neck is above head, don't move up
+  } else if (myHead.x == 0) { 
     isMoveSafe.left = false;
     console.log(`remove left - border`);
   }
