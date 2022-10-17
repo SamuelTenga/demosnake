@@ -166,12 +166,13 @@ function move(gameState) {
   var allBodies = myBody; 
   var opponents = gameState.board.snakes;
   console.log(opponents);
-  opponents.array.forEach(element => {
+  
+  opponents.forEach(element => {
     allBodies += element.body
   });
   console.log(myBody);
   console.log(allBodies);
-  
+
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
   console.log(safeMoves);
