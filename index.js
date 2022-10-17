@@ -170,7 +170,7 @@ function move(gameState) {
   }
 
   var food = [];
-  food.push(gameState.board.food);
+  food = (gameState.board.food);
   var nearestFood;
   var distanceToNearestFood=99;
   food.array.forEach(afood => {
