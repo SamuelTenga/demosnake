@@ -94,11 +94,11 @@ function move(gameState) {
     y: myHead.y-1
   };
   let nextMoveLeft= {
-    x: myHead.x+1,
+    x: myHead.x-1,
     y: myHead.y
   };
   let nextMoveRight= {
-    x: myHead.x-1,
+    x: myHead.x+1,
     y: myHead.y
   };
 
@@ -137,22 +137,22 @@ function move(gameState) {
 
   if(isUpUnsafe.length == 1){
     isMoveSafe.up = false;
-    console.log(isUpUnsafe);
+    console.log(`remove up` + isUpUnsafe);
   }
 
   if(isDownUnsafe.length == 1){
     isMoveSafe.down = false;
-    console.log(isDownUnsafe);
+    console.log(`remove down` + isDownUnsafe);
   }
 
   if(isLeftUnsafe.length == 1){
     isMoveSafe.left = false;
-    console.log(isLeftUnsafe);
+    console.log(`remove left` + isLeftUnsafe);
   }
 
   if(isRigihtUnsafe.length == 1){
     isMoveSafe.right = false;
-    console.log(isRigihtUnsafe);
+    console.log(`remove right` + isRigihtUnsafe);
   }
 
 
