@@ -71,15 +71,16 @@ function move(gameState) {
   var boardHeight = gameState.board.height;
   if (myHead.y == 1) {        // Neck is left of head, don't move left
     isMoveSafe.down = false;
-
+    console.log(`remove dwon - border`);
   } else if (myHead.y == boardHeight-1) { // Neck is right of head, don't move right
     isMoveSafe.up = false;
-
+    console.log(`remove up - border`);
   } else if (myHead.x == boardWidth-1) { // Neck is right of head, don't move right
     isMoveSafe.right = false;
-
+    console.log(`remove right - border`);
   } else if (myHead.x == 1) { // Neck is above head, don't move up
     isMoveSafe.left = false;
+    console.log(`remove left - border`);
   }
 
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
@@ -137,22 +138,22 @@ function move(gameState) {
 
   if(isUpUnsafe.length == 1){
     isMoveSafe.up = false;
-    console.log(`remove up` + isUpUnsafe);
+    console.log(`remove up - suicide`);
   }
 
   if(isDownUnsafe.length == 1){
     isMoveSafe.down = false;
-    console.log(`remove down` + isDownUnsafe);
+    console.log(`remove down - suicide`);
   }
 
   if(isLeftUnsafe.length == 1){
     isMoveSafe.left = false;
-    console.log(`remove left` + isLeftUnsafe);
+    console.log(`remove left - suicide`);
   }
 
   if(isRigihtUnsafe.length == 1){
     isMoveSafe.right = false;
-    console.log(`remove right` + isRigihtUnsafe);
+    console.log(`remove right - suicide`);
   }
 
 
