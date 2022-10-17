@@ -186,37 +186,38 @@ function move(gameState) {
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
   var food = gameState.board.food;
-  var nearestFood;
-  var distanceToNearestFood=99;
-  food.forEach(thisFood => {
-    var foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
-    
-    if( distanceToNearestFood > foodDistance){
-      nearestFood = thisFood;
-      distanceToNearestFood=foodDistance;
-      console.log("new food");
-      console.log(nearestFood);
-      console.log(distanceToNearestFood);
+  if(food.length> 0 ){
+    var nearestFood;
+    var distanceToNearestFood=99;
+    food.forEach(thisFood => {
+      var foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
+      
+      if( distanceToNearestFood > foodDistance){
+        nearestFood = thisFood;
+        distanceToNearestFood=foodDistance;
+        console.log("new food");
+        console.log(nearestFood);
+        console.log(distanceToNearestFood);
+      }
+    });
+
+    if (nearestFood.x > myHead.x && isMoveSafe.right) {
+      console.log("nearestFood right");
+      return { move: "right" };
     }
-  });
-
-  if (nearestFood.x > myHead.x && isMoveSafe.right) {
-    console.log("nearestFood right");
-    return { move: "right" };
+    if (  myHead.x > nearestFood.x && isMoveSafe.left) {
+      console.log("nearestFood left");
+      return { move: "left" };
+    }
+    if (nearestFood.y > myHead.y && isMoveSafe.up) {
+      console.log("nearestFood up");
+      return { move: "up" };
+    }
+    if (  myHead.y > nearestFood.y && isMoveSafe.down) {
+      console.log("nearestFood down");
+      return { move: "down" };
+    }
   }
-  if (  myHead.x > nearestFood.x && isMoveSafe.left) {
-    console.log("nearestFood left");
-    return { move: "left" };
-  }
-  if (nearestFood.y > myHead.y && isMoveSafe.up) {
-    console.log("nearestFood up");
-    return { move: "up" };
-  }
-  if (  myHead.y > nearestFood.y && isMoveSafe.down) {
-    console.log("nearestFood down");
-    return { move: "down" };
-  }
-
   // Choose a random move from the safe moves
   const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
 
