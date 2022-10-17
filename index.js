@@ -72,10 +72,10 @@ function move(gameState) {
   if (myNeck.y == 1) {        // Neck is left of head, don't move left
     isMoveSafe.down = false;
 
-  } else if (myNeck.y == boardHeight) { // Neck is right of head, don't move right
+  } else if (myNeck.y == boardHeight-1) { // Neck is right of head, don't move right
     isMoveSafe.up = false;
 
-  } else if (myNeck.x == boardWidth) { // Neck is right of head, don't move right
+  } else if (myNeck.x == boardWidth-1) { // Neck is right of head, don't move right
     isMoveSafe.right = false;
 
   } else if (myNeck.x == 1) { // Neck is above head, don't move up
