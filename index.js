@@ -30,6 +30,7 @@ function info() {
 // start is called when your Battlesnake begins a game
 function start(gameState) {
   console.log("GAME START");
+  console.log(gameState);
 }
 
 // end is called when your Battlesnake finishes a game
