@@ -202,19 +202,19 @@ function move(gameState) {
 
   if (nearestFood.x > myHead.x && isMoveSafe.right) {
     console.log("nearestFood right");
-    return { move: right };
+    return { move: "right" };
   }
   if (  myHead.x > nearestFood.x && isMoveSafe.left) {
     console.log("nearestFood left");
-    return { move: left };
+    return { move: "left" };
   }
   if (nearestFood.y > myHead.y && isMoveSafe.up) {
     console.log("nearestFood up");
-    return { move: up };
+    return { move: "up" };
   }
   if (  myHead.y > nearestFood.y && isMoveSafe.down) {
     console.log("nearestFood down");
-    return { move: down };
+    return { move: "down" };
   }
 
   // Choose a random move from the safe moves
