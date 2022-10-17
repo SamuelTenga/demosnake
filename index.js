@@ -72,17 +72,17 @@ function move(gameState) {
   console.log(gameState.board)
   console.log(myHead)
   if (myHead.y == 1) {       
-    isMoveSafe.down = false;
-    console.log(`remove dwon - border`);
-  } else if (myHead.y == boardHeight) { 
-    isMoveSafe.up = false;
-    console.log(`remove up - border`);
-  } else if (myHead.x == boardWidth) { 
     isMoveSafe.right = false;
     console.log(`remove right - border`);
-  } else if (myHead.x == 1) { 
+  } else if (myHead.y == boardWidth) { 
     isMoveSafe.left = false;
     console.log(`remove left - border`);
+  } else if (myHead.x == boardHeight) { 
+    isMoveSafe.up = false;
+    console.log(`remove up - border`);
+  } else if (myHead.x == 1) { 
+    isMoveSafe.down = false;
+    console.log(`remove down - border`);
   }
  
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
