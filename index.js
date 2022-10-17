@@ -172,11 +172,11 @@ function move(gameState) {
   var food = gameState.board.food;
   var nearestFood;
   var distanceToNearestFood=99;
-  food.forEach(afood => {
-    var foodDistance = Math.abs(myHead.x - afood.x) + Math.abs(myHead.y - afood.y);
+  food.forEach(thisFood => {
+    var foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
     
-    if(foodDistance>=distanceToNearestFood){
-      nearestFood = afood;
+    if( distanceToNearestFood > foodDistance){
+      nearestFood = thisFood;
       distanceToNearestFood=foodDistance;
       console.log("new food");
       console.log(nearestFood);
