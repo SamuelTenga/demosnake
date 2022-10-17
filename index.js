@@ -168,7 +168,7 @@ function move(gameState) {
   console.log(opponents);
   
   opponents.forEach(element => {
-    allBodies += element.body
+    allBodies.push(element.body);
   });
   console.log(myBody);
   console.log(allBodies);
