@@ -101,7 +101,7 @@ function move(gameState) {
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
 
-  console.log(`MOVE ${gameState.turn}: ${nextMove}`)
+  console.log(`MOVE ${gameState.turn}: ${nextMove}, HEAD ${myHead.x}, ${myHead.y}, Width: ${boardWidth}, Height: ${boardHeight}`)
   return { move: nextMove };
 }
 
