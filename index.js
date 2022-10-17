@@ -163,10 +163,10 @@ function move(gameState) {
   }
 
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
-  var allBodies = myBody; 
+  var allBodies =[]; 
   var opponents = gameState.board.snakes;
 
-  
+  allBodies.push(myBody);
   opponents.forEach(element => {
     allBodies.push(element.body);
   });
