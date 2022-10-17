@@ -104,17 +104,38 @@ function move(gameState) {
 
 
   let isUpSafe = myBody.filter(element => {
-    console.log(element.x);
-    console.log(element.y);
-    console.log(`x: ${element.x} y: ${element.y}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y}`);
     if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
       return false;
     }
     return true;
   });
-  let isDownSafe = myBody.filter(key => key === nextMoveDown);
-  let isLeftSafe = myBody.filter(key => key === nextMoveLeft);
-  let isRightSafe = myBody.filter(key => key === nextMoveRight);
+  
+  let isDownSafe = myBody.filter(element => {
+    if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
+      return false;
+    }
+    return true;
+  });
+
+    
+  let isLeftSafe = myBody.filter(element => {
+    if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
+      return false;
+    }
+    return true;
+  });
+
+  let isRightSafe = myBody.filter(element => {
+    if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
+      return false;
+    }
+    return true;
+  });
+  console.log(isUpSafe);
+  console.log(isDownSafe);
+  console.log(isLeftSafe);
+  console.log(isRightSafe);
+
   console.log(`isUpSafe ${isUpSafe}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y}`);
   console.log(`isDownSafe ${isDownSafe}, nextMoveDown= x: ${nextMoveDown.x} y: ${nextMoveDown.y}`);
   console.log(`isLeftSafe ${isLeftSafe}, nextMoveLeft= ${nextMoveLeft.x} y: ${nextMoveLeft.y}`);
