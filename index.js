@@ -105,31 +105,31 @@ function move(gameState) {
 
   let isUpSafe = myBody.filter(element => {
     if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
-      return false;
+      return true;
     }
-    return true;
+    return false;
   });
   
   let isDownSafe = myBody.filter(element => {
     if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
-      return false;
+      return true;
     }
-    return true;
+    return false;
   });
 
     
   let isLeftSafe = myBody.filter(element => {
     if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
-      return false;
+      return true;
     }
-    return true;
+    return false;
   });
 
   let isRightSafe = myBody.filter(element => {
     if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
-      return false;
+      return true;
     }
-    return true;
+    return false;
   });
   console.log(isUpSafe);
   console.log(isDownSafe);
