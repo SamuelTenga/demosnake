@@ -103,14 +103,20 @@ function move(gameState) {
   };
 
 
-  const isUpSafe = myBody.filter(key => key.x == nextMoveUp.x && key.y == nextMoveUp.y);
-  const isDownSafe = myBody.filter(key => key === nextMoveDown);
-  const isLeftSafe = myBody.filter(key => key === nextMoveLeft);
-  const isRightSafe = myBody.filter(key => key === nextMoveRight);
-  console.log(`isUpSafe ${isUpSafe}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y} `);
-  console.log(`isUpSafe ${isDownSafe}, nextMoveUp= ${nextMoveDown} `);
-  console.log(`isUpSafe ${isLeftSafe}, nextMoveUp= ${nextMoveLeft} `);
-  console.log(`isUpSafe ${isRightSafe}, nextMoveUp= ${nextMoveRight} `);
+  let isUpSafe = myBody.filter(element => {
+    console.log(`key ${element.x} y: ${element.y}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y}`);
+    if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
+      return false;
+    }
+    return true;
+  });
+  let isDownSafe = myBody.filter(key => key === nextMoveDown);
+  let isLeftSafe = myBody.filter(key => key === nextMoveLeft);
+  let isRightSafe = myBody.filter(key => key === nextMoveRight);
+  console.log(`isUpSafe ${isUpSafe}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y}`);
+  console.log(`isUpSafe ${isDownSafe}, nextMoveDown= x: ${nextMoveDown.x} y: ${nextMoveDown.y}`);
+  console.log(`isUpSafe ${isLeftSafe}, nextMoveLeft= ${nextMoveLeft.x} y: ${nextMoveLeft.y}`);
+  console.log(`isUpSafe ${isRightSafe}, nextMoveRight= ${nextMoveRight.x} y: ${nextMoveRight.y}`);
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
 
