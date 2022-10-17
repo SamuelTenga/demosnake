@@ -83,7 +83,8 @@ function move(gameState) {
   }
 
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
-  // myBody = gameState.you.body;
+  var myBody = gameState.you.body;
+  console.log(myBody);
 
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
@@ -101,7 +102,7 @@ function move(gameState) {
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
 
-  console.log(`MOVE ${gameState.turn}: ${nextMove}, HEAD ${myHead.x}, ${myHead.y}, Width: ${boardWidth}, Height: ${boardHeight}`)
+  console.log(`MOVE ${gameState.turn}: ${nextMove}, HEAD X=${myHead.x}, Y=${myHead.y}, Width: ${boardWidth}, Height: ${boardHeight}`)
   return { move: nextMove };
 }
 
