@@ -90,7 +90,14 @@ function move(gameState) {
  
 
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
-  var myBody = gameState.you.body;
+  var allBodies =[]; 
+  var opponents = (gameState.board.snakes);
+
+  opponents.forEach(element => {
+    allBodies.push(element.body);
+  });
+
+  var snakebodies =allBodies.flat(1);
 
   let nextMoveUp = {
     x: myHead.x,
@@ -110,14 +117,14 @@ function move(gameState) {
   };
 
 
-  let isUpUnsafe = myBody.filter(element => {
+  let isUpUnsafe = snakebodies.filter(element => {
     if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
       return true;
     }
     return false;
   });
   
-  let isDownUnsafe = myBody.filter(element => {
+  let isDownUnsafe = snakebodies.filter(element => {
     if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
       return true;
     }
@@ -125,14 +132,14 @@ function move(gameState) {
   });
 
     
-  let isLeftUnsafe = myBody.filter(element => {
+  let isLeftUnsafe = snakebodies.filter(element => {
     if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
       return true;
     }
     return false;
   });
 
-  let isRigihtUnsafe = myBody.filter(element => {
+  let isRigihtUnsafe = snakebodies.filter(element => {
     if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
       return true;
     }
@@ -162,21 +169,20 @@ function move(gameState) {
     console.log(`remove right - suicide`);
   }
 
-  // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
-  var allBodies =[]; 
-  var opponents = (gameState.board.snakes);
-  
+  // // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
+  // var allBodies =[]; 
+  // var opponents = (gameState.board.snakes);
 
-  // allBodies.push(myBody);
-  opponents.forEach(element => {
-    allBodies.push(element.body);
-  });
-  console.log("myBody");
-  console.log(myBody);
-  console.log("allBodies");
-  console.log(allBodies);
-  console.log("allBodies.flat");
-  console.log(allBodies.flat(1));
+  // // allBodies.push(myBody);
+  // opponents.forEach(element => {
+  //   allBodies.push(element.body);
+  // });
+  // console.log("myBody");
+  // console.log(myBody);
+  // console.log("allBodies");
+  // console.log(allBodies);
+  // console.log("allBodies.flat");
+  // console.log(allBodies.flat(1));
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
