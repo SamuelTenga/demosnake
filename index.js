@@ -82,7 +82,7 @@ function move(gameState) {
     isMoveSafe.left = false;
     console.log(`remove left - border`);
   }
-
+ 
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
   var myBody = gameState.you.body;
   console.log(myBody);
