@@ -137,19 +137,19 @@ function move(gameState) {
   console.log(isRigihtUnsafe);
 
   if(isUpUnsafe.length == 1){
-    safeMoves.up = false;
+    isMoveSafe.up = false;
   }
 
   if(isDownUnsafe.length == 1){
-    safeMoves.down = false;
+    isMoveSafe.down = false;
   }
 
   if(isLeftUnsafe.length == 1){
-    safeMoves.left = false;
+    isMoveSafe.left = false;
   }
 
   if(isRigihtUnsafe.length == 1){
-    safeMoves.right = false;
+    isMoveSafe.right = false;
   }
 
   console.log(`isUpSafe ${isUpUnsafe}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y}`);
