@@ -85,7 +85,31 @@ function move(gameState) {
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
   var myBody = gameState.you.body;
   console.log(myBody);
+  let nextMoveUp= [
+    x=myHead.x,
+    y=myHead.y+1
+  ]
+  let nextMoveDown= [
+    x=myHead.x,
+    y=myHead.y-1
+  ]
+  let nextMoveLeft= [
+    x=myHead.x-1,
+    y=myHead.y
+  ]
+  let nextMoveRight= [
+    x=myHead.x+1,
+    y=myHead.y
+  ]
 
+  const isUpSafe = Object.keys(myBody).filter(key => key === nextMoveUp);
+  const isDownSafe = Object.keys(myBody).filter(key => key === nextMoveDown);
+  const isLeftSafe = Object.keys(myBody).filter(key => key === nextMoveLeft);
+  const isRightSafe = Object.keys(myBody).filter(key => key === nextMoveRight);
+  console.log(`isUpSafe` + isUpSafe);
+  console.log(`isDownSafe` + isDownSafe);
+  console.log(`isLeftSafe` + isLeftSafe);
+  console.log(`isRightSafe` + isRightSafe);
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
 
