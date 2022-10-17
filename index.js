@@ -169,11 +169,10 @@ function move(gameState) {
     console.log(`remove right - suicide`);
   }
 
-  var food = [];
-  food = (gameState.board.food);
+  var food = gameState.board.food;
   var nearestFood;
   var distanceToNearestFood=99;
-  food.array.forEach(afood => {
+  food.forEach(afood => {
     var foodDistance = Math.abs(myHead.x - afood.x) + Math.abs(myHead.y - afood.y);
     
     if(foodDistance>=distanceToNearestFood){
