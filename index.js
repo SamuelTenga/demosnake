@@ -88,6 +88,7 @@ function move(gameState) {
     console.log(`remove left - border`);
   }
  
+
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
   var myBody = gameState.you.body;
 
@@ -161,11 +162,16 @@ function move(gameState) {
     console.log(`remove right - suicide`);
   }
 
-
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
+  var allBodies = myBody; 
   var opponents = gameState.board.snakes;
   console.log(opponents);
-
+  opponents.array.forEach(element => {
+    allBodies += element.body
+  });
+  console.log(myBody);
+  console.log(allBodies);
+  
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
   console.log(safeMoves);
