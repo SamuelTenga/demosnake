@@ -71,7 +71,7 @@ function move(gameState) {
   var boardHeight = gameState.board.height;
   console.log(gameState.board)
   console.log(myHead)
-  if (myHead.y == 1) {       
+  if (myHead.y == 0) {       
     isMoveSafe.right = false;
     console.log(`remove right - border`);
   } else if (myHead.y == boardWidth) { 
@@ -80,7 +80,7 @@ function move(gameState) {
   } else if (myHead.x == boardHeight) { 
     isMoveSafe.up = false;
     console.log(`remove up - border`);
-  } else if (myHead.x == 1) { 
+  } else if (myHead.x == 0) { 
     isMoveSafe.down = false;
     console.log(`remove down - border`);
   }
