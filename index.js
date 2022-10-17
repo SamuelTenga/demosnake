@@ -169,6 +169,22 @@ function move(gameState) {
     console.log(`remove right - suicide`);
   }
 
+
+
+
+
+  // Are there any safe moves left?
+  const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
+  console.log(safeMoves);
+  if (safeMoves.length == 0) {
+    console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`);
+    return { move: "down" };
+  }
+
+  
+
+  // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
+  // food = gameState.board.food;
   var food = gameState.board.food;
   var nearestFood;
   var distanceToNearestFood=99;
@@ -181,23 +197,28 @@ function move(gameState) {
       console.log("new food");
       console.log(nearestFood);
       console.log(distanceToNearestFood);
-
     }
   });
 
-  // Are there any safe moves left?
-  const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
-  console.log(safeMoves);
-  if (safeMoves.length == 0) {
-    console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`);
-    return { move: "down" };
+  if (nearestFood.x > myHead.x && isMoveSafe.right) {
+    console.log("nearestFood right");
+    return { move: right };
+  }
+  if (  myHead.x > nearestFood.x && isMoveSafe.left) {
+    console.log("nearestFood left");
+    return { move: left };
+  }
+  if (nearestFood.y > myHead.y && isMoveSafe.up) {
+    console.log("nearestFood up");
+    return { move: up };
+  }
+  if (  myHead.y > nearestFood.y && isMoveSafe.down) {
+    console.log("nearestFood down");
+    return { move: down };
   }
 
   // Choose a random move from the safe moves
   const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
-
-  // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-  // food = gameState.board.food;
 
   console.log(`MOVE ${gameState.turn}: ${nextMove}, HEAD X=${myHead.x}, Y=${myHead.y}, Width: ${boardWidth}, Height: ${boardHeight}`)
   return { move: nextMove };
