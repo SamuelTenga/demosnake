@@ -131,36 +131,37 @@ function move(gameState) {
     }
     return false;
   });
-  console.log(isUpUnsafe);
-  console.log(isDownUnsafe);
-  console.log(isLeftUnsafe);
-  console.log(isRigihtUnsafe);
+  
+  
+  
 
   if(isUpUnsafe.length == 1){
     isMoveSafe.up = false;
+    console.log(isUpUnsafe);
   }
 
   if(isDownUnsafe.length == 1){
     isMoveSafe.down = false;
+    console.log(isDownUnsafe);
   }
 
   if(isLeftUnsafe.length == 1){
     isMoveSafe.left = false;
+    console.log(isLeftUnsafe);
   }
 
   if(isRigihtUnsafe.length == 1){
     isMoveSafe.right = false;
+    console.log(isRigihtUnsafe);
   }
 
-  console.log(`isUpSafe ${isUpUnsafe}, nextMoveUp=> x: ${nextMoveUp.x} y: ${nextMoveUp.y}`);
-  console.log(`isDownSafe ${isDownUnsafe}, nextMoveDown= x: ${nextMoveDown.x} y: ${nextMoveDown.y}`);
-  console.log(`isLeftSafe ${isLeftUnsafe}, nextMoveLeft= ${nextMoveLeft.x} y: ${nextMoveLeft.y}`);
-  console.log(`isRightSafe ${isRigihtUnsafe}, nextMoveRight= ${nextMoveRight.x} y: ${nextMoveRight.y}`);
+
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
+  console.log(safeMoves);
   if (safeMoves.length == 0) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`);
     return { move: "down" };
