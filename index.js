@@ -20,7 +20,7 @@ function info() {
 
   return {
     apiversion: "1",
-    author: "Sam's Snake",      
+    author: "Sam's Snake ",      
     color: "#f59b25", 
     head: "beluga",  
     tail: "skinny", 
@@ -67,8 +67,20 @@ function move(gameState) {
   }
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  // boardWidth = gameState.board.width;
-  // boardHeight = gameState.board.height;
+  boardWidth = gameState.board.width;
+  boardHeight = gameState.board.height;
+  if (myNeck.y == 1) {        // Neck is left of head, don't move left
+    isMoveSafe.down = false;
+
+  } else if (myNeck.y == boardHeight) { // Neck is right of head, don't move right
+    isMoveSafe.up = false;
+
+  } else if (myNeck.x == boardWidth) { // Neck is right of head, don't move right
+    isMoveSafe.right = false;
+
+  } else if (myNeck.x == 1) { // Neck is above head, don't move up
+    isMoveSafe.left = false;
+  }
 
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
   // myBody = gameState.you.body;
