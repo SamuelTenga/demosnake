@@ -169,20 +169,22 @@ function move(gameState) {
     console.log(`remove right - suicide`);
   }
 
-  // // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
-  // var allBodies =[]; 
-  // var opponents = (gameState.board.snakes);
+  var food = [];
+  food.push(gameState.board.food);
+  var nearestFood;
+  var distanceToNearestFood=99;
+  food.array.forEach(afood => {
+    var foodDistance = Math.abs(myHead.x - afood.x) + Math.abs(myHead.y - afood.y);
+    
+    if(foodDistance>=distanceToNearestFood){
+      nearestFood = afood;
+      distanceToNearestFood=foodDistance;
+      console.log("new food");
+      console.log(nearestFood);
+      console.log(distanceToNearestFood);
 
-  // // allBodies.push(myBody);
-  // opponents.forEach(element => {
-  //   allBodies.push(element.body);
-  // });
-  // console.log("myBody");
-  // console.log(myBody);
-  // console.log("allBodies");
-  // console.log(allBodies);
-  // console.log("allBodies.flat");
-  // console.log(allBodies.flat(1));
+    }
+  });
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
