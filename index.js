@@ -208,13 +208,13 @@ function move(gameState) {
   var downCopy = matrix;
   var counter=0;
   var fillRight = fillMatrix1(rightCopy, myHead.y, myHead.x+1, counter);
-  console.log(`FILL-RIGHT ${counter}`);
+  console.log(`FILL- ${counter}`);
   var fillLeft = fillMatrix1(leftCopy, myHead.y, myHead.x-1, counter);
-  console.log(`FILL-RIGHT ${counter}`);
+  console.log(`FILL- ${counter}`);
   var fillUp = fillMatrix1(upCopy, myHead.y+1, myHead.x, counter);
-  console.log(`FILL-RIGHT ${counter}`);
+  console.log(`FILL- ${counter}`);
   var fillDown = fillMatrix1(downCopy, myHead.y-1, myHead.x, counter);
-  console.log(`FILL-RIGHT ${counter}`);
+  console.log(`FILL- ${counter}`);
   
   console.log(`FILL-RIGHT ${fillRight}`);
   console.log(`FILL-LEFT ${fillLeft}`);
@@ -280,10 +280,10 @@ function fillMatrix1(matrix, row, col, counter)
     matrix[row][col] = 1;
     counter++;
 
-    fillMatrix1(matrix, row + 1, col);
-    fillMatrix1(matrix, row - 1, col);
-    fillMatrix1(matrix, row, col + 1 );
-    fillMatrix1(matrix, row, col -1 );
+    fillMatrix1(matrix, row + 1, col, counter);
+    fillMatrix1(matrix, row - 1, col. counter);
+    fillMatrix1(matrix, row, col + 1 , counter);
+    fillMatrix1(matrix, row, col -1 , counter);
     return counter;
 }
 
