@@ -260,7 +260,7 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   var leftMatrix = matrix;
   var upMatrix = matrix;
   var downMatrix = matrix;
-
+  
   var fillRight = fillMatrix1(rightMatrix, myHead.y, myHead.x + 1, 0);
   var fillLeft = fillMatrix1(leftMatrix, myHead.y, myHead.x - 1, 0);
   var fillUp = fillMatrix1(upMatrix, myHead.y + 1, myHead.x, 0);
@@ -270,6 +270,7 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   console.log(`FILL-UP ${fillUp}`);
   console.log(`FILL-DOWN ${fillDown}`);
 
+  var fillStack = [];
   var test0 = matrix;
   var test1 = matrix;
   var test2 = matrix;
