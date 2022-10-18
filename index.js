@@ -177,16 +177,16 @@ function move(gameState) {
   console.log(safeMoves);
   if (safeMoves.length == 0) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Carry on :)`);
-    if (myNeck.x < myHead.x) {        // Neck is left of head, don't move left
-      console.log(`carry on - left`);
-      return { move: "left" };
-    } else if (myNeck.x > myHead.x) { // Neck is right of head, don't move right
+    if (myNeck.x < myHead.x) {        // Neck is left of head, move right
       console.log(`carry on - right`);
       return { move: "right" };
-    } else if (myNeck.y < myHead.y) { // Neck is below head, don't move down
+    } else if (myNeck.x > myHead.x) { // Neck is right of head, move left
+      console.log(`carry on - left`);
+      return { move: "left" };
+    } else if (myNeck.y < myHead.y) { // Neck is below head, move up
       console.log(`carry on - up`);
       return { move: "up" };
-    } else if (myNeck.y > myHead.y) { // Neck is above head, don't move up
+    } else if (myNeck.y > myHead.y) { // Neck is above head, move down
       console.log(`carry on - down`);
       return { move: "down" };
     }
