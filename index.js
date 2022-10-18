@@ -195,8 +195,14 @@ function move(gameState) {
   // console.log(matrix);
 
 
-  var fillRight = fillMatrix1(matrix, myHead.x-1, myHead.y, 0);
+  var fillRight = fillMatrix1(matrix, myHead.x+1, myHead.y, 0);
+  var fillLeft = fillMatrix1(matrix, myHead.x-1, myHead.y, 0);
+  var fillUp = fillMatrix1(matrix, myHead.x, myHead.y+1, 0);
+  var fillDown = fillMatrix1(matrix, myHead.x, myHead.y-1, 0);
   console.log(`FILL-RIGHT ${fillRight}`);
+  console.log(`FILL-LEFT ${fillLeft}`);
+  console.log(`FILL-UP ${fillUp}`);
+  console.log(`FILL-DOWN ${fillDown}`);
 
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
