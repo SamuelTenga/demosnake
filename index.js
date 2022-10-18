@@ -30,7 +30,7 @@ function info() {
 // start is called when your Battlesnake begins a game
 function start(gameState) {
   console.log("GAME START");
-  console.log(JSON.stringify(gameState, null, 2));
+  console.log(JSON.stringify(gameState));
 }
 
 // end is called when your Battlesnake finishes a game
@@ -70,10 +70,10 @@ function move(gameState) {
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   var boardWidth = gameState.board.width;
   var boardHeight = gameState.board.height;
-  if (gameState.ruleset.name == 'wrapped') {
+  if (gameState.ruleset == 'wrapped') {
     console.log("Don't remove borders, this is a wrapped game")
   } else {
-    console.log(gameState.ruleset.name);
+    console.log(JSON.stringify(gameState));
     if (myHead.y == 0) {       
       isMoveSafe.down = false;
       console.log(`remove down - border`);
