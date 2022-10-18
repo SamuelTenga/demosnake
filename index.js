@@ -206,10 +206,15 @@ function move(gameState) {
   var leftCopy = matrix;
   var upCopy = matrix;
   var downCopy = matrix;
-  var fillRight = fillMatrix1(rightCopy, myHead.y, myHead.x+1);
-  var fillLeft = fillMatrix1(leftCopy, myHead.y, myHead.x-1);
-  var fillUp = fillMatrix1(upCopy, myHead.y+1, myHead.x);
-  var fillDown = fillMatrix1(downCopy, myHead.y-1, myHead.x);
+  var counter=0;
+  var fillRight = fillMatrix1(rightCopy, myHead.y, myHead.x+1, counter);
+  console.log(`FILL-RIGHT ${counter}`);
+  var fillLeft = fillMatrix1(leftCopy, myHead.y, myHead.x-1, counter);
+  console.log(`FILL-RIGHT ${counter}`);
+  var fillUp = fillMatrix1(upCopy, myHead.y+1, myHead.x, counter);
+  console.log(`FILL-RIGHT ${counter}`);
+  var fillDown = fillMatrix1(downCopy, myHead.y-1, myHead.x, counter);
+  console.log(`FILL-RIGHT ${counter}`);
   
   console.log(`FILL-RIGHT ${fillRight}`);
   console.log(`FILL-LEFT ${fillLeft}`);
@@ -264,7 +269,7 @@ function move(gameState) {
 }
 
 // Flood fill algorithm implemented recursively
-function fillMatrix1(matrix, row, col)
+function fillMatrix1(matrix, row, col, counter)
 {
     if (!validCoordinates(matrix, row, col))
         return;
@@ -273,6 +278,7 @@ function fillMatrix1(matrix, row, col)
         return;
     
     matrix[row][col] = 1;
+    counter++;
 
     fillMatrix1(matrix, row + 1, col);
     fillMatrix1(matrix, row - 1, col);
