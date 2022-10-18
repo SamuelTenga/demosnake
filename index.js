@@ -54,7 +54,7 @@ function move(gameState) {
   const myHead = gameState.you.body[0];
   const myNeck = gameState.you.body[1];
 
-  if (myNeck.x < myHead.x && myHead.x !=  gameState.board.width) {        // Neck is left of head, don't move left
+  if (myNeck.x < myHead.x && myHead.x !=  gameState.board.width-1) {        // Neck is left of head, don't move left
     isMoveSafe.left = false;
     console.log("remove left - hanging");
   } else if (myNeck.x > myHead.x && myHead.x !=  0) { // Neck is right of head, don't move right
@@ -201,6 +201,7 @@ function move(gameState) {
       console.log(`----------------`);
       return { move: "down" };
     }
+    console.log(`----------------`);
     return { move: "down" };
   }
 
@@ -249,6 +250,7 @@ function move(gameState) {
   const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
 
   console.log(`MOVE ${gameState.turn}: ${nextMove}, HEAD X=${myHead.x}, Y=${myHead.y}, Width: ${boardWidth}, Height: ${boardHeight}`)
+  console.log(`----------------`);
   return { move: nextMove };
 }
 
