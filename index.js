@@ -197,11 +197,24 @@ function move(gameState) {
   console.log("init fllod");
   console.log(matrix);
   snakebodies.forEach(hazzard => {
-    matrix[hazzard.x][hazzard.y] = 1;
+    matrix[hazzard.y][hazzard.x] = 1;
   } );
   console.log("pre flood");
   console.log(matrix);
+
+  var rightCopy = matrix;
+  var leftCopy = matrix;
+  var upCopy = matrix;
+  var downCopy = matrix;
+  var fillRight = fillMatrix1(rightCopy, myHead.y, myHead.x+1);
+  var fillLeft = fillMatrix1(leftCopy, myHead.y, myHead.x-1);
+  var fillUp = fillMatrix1(upCopy, myHead.y+1, myHead.x);
+  var fillDown = fillMatrix1(downCopy, myHead.y-1, myHead.x);
   
+  console.log(`FILL-RIGHT ${fillRight}`);
+  console.log(`FILL-LEFT ${fillLeft}`);
+  console.log(`FILL-UP ${fillUp}`);
+  console.log(`FILL-DOWN ${fillDown}`);
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
