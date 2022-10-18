@@ -187,6 +187,7 @@ function move(gameState) {
   }
 
   //FLOODFILL ? LETS TRY
+  // boardHeight, boardWidth -- y , x -- rows, cols
   var matrix = generateMatrix(boardHeight, boardWidth);
   snakebodies.forEach(hazzard => {
     matrix[hazzard.y][hazzard.x] = 1;
@@ -198,10 +199,10 @@ function move(gameState) {
   var upMatrix = matrix;
   var downMatrix = matrix;
 
-  var fillRight = fillMatrix1(rightMatrix, myHead.x+1, myHead.y, 0);
-  var fillLeft = fillMatrix1(leftMatrix, myHead.x-1, myHead.y, 0);
-  var fillUp = fillMatrix1(upMatrix, myHead.x, myHead.y+1, 0);
-  var fillDown = fillMatrix1(downMatrix, myHead.x, myHead.y-1, 0);
+  var fillRight = fillMatrix1(rightMatrix, myHead.y, myHead.x+1, 0);
+  var fillLeft = fillMatrix1(leftMatrix, myHead.y, myHead.x-1, 0);
+  var fillUp = fillMatrix1(upMatrix, myHead.y+1, myHead.x, 0);
+  var fillDown = fillMatrix1(downMatrix, myHead.y-1, myHead.x, 0);
   console.log(`FILL-RIGHT ${fillRight}`);
   console.log(`FILL-LEFT ${fillLeft}`);
   console.log(`FILL-UP ${fillUp}`);
