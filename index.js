@@ -272,18 +272,18 @@ function move(gameState) {
 function fillMatrix1(matrix, row, col, counter)
 {
     if (!validCoordinates(matrix, row, col))
-        return;
+        return counter;
         
     if (matrix[row][col] == 1)
-        return;
+        return counter;
     
     matrix[row][col] = 1;
     counter++;
 
-    fillMatrix1(matrix, row + 1, col, counter);
-    fillMatrix1(matrix, row - 1, col. counter);
-    fillMatrix1(matrix, row, col + 1 , counter);
-    fillMatrix1(matrix, row, col -1 , counter);
+    counter = fillMatrix1(matrix, row + 1, col, counter);
+    counter = fillMatrix1(matrix, row - 1, col. counter);
+    counter = fillMatrix1(matrix, row, col + 1 , counter);
+    counter = fillMatrix1(matrix, row, col -1 , counter);
     return counter;
 }
 
