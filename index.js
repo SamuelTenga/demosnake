@@ -54,19 +54,6 @@ function move(gameState) {
   const myHead = gameState.you.body[0];
   const myNeck = gameState.you.body[1];
 
-  // if (myNeck.x < myHead.x && myHead.x !=  gameState.board.width-1) {        // Neck is left of head, don't move left
-  //   isMoveSafe.left = false;
-  //   console.log("remove left - hanging");
-  // } else if (myNeck.x > myHead.x && myHead.x !=  0) { // Neck is right of head, don't move right
-  //   isMoveSafe.right = false;
-  //   console.log("remove right - hanging");
-  // } else if (myNeck.y < myHead.y && myHead.y !=  gameState.board.height-1) { // Neck is below head, don't move down
-  //   isMoveSafe.down = false;
-  //   console.log("remove down - hanging");
-  // } else if (myNeck.y > myHead.y && myHead.x !=  0) { // Neck is above head, don't move up
-  //   isMoveSafe.up = false;
-  //   console.log("remove up - hanging");
-  // }
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   var boardWidth = gameState.board.width;
@@ -205,6 +192,15 @@ function move(gameState) {
     return { move: "down" };
   }
 
+  //FLOODFILL ? LETS TRY
+  var matrix = generateMatrix(boardHeight, boardWidth);
+  console.log("init fllod");
+  console.log(matrix);
+  snakebodies.forEach(hazzard => {
+    matrix[hazzard.x][hazzard.y] = 1;
+  } );
+  console.log("pre flood");
+  console.log(matrix);
   
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
@@ -253,6 +249,75 @@ function move(gameState) {
   console.log(`----------------`);
   return { move: nextMove };
 }
+
+// Flood fill algorithm implemented recursively
+function fillMatrix1(matrix, row, col)
+{
+    if (!validCoordinates(matrix, row, col))
+        return;
+        
+    if (matrix[row][col] == 1)
+        return;
+    
+    matrix[row][col] = 1;
+
+    fillMatrix1(matrix, row + 1, col);
+    fillMatrix1(matrix, row - 1, col);
+    fillMatrix1(matrix, row, col + 1 );
+    fillMatrix1(matrix, row, col -1 );
+}
+
+// Flood fill algorithm implemented with a stack on the heap
+// This algorithm will also work with big size matrixes
+function fillMatrix2(matrix, row, col)
+{
+    fillStack.push([row, col]);
+    
+    while(fillStack.length > 0)
+    {
+        var [row, col] = fillStack.pop();
+        
+        if (!validCoordinates(matrix, row, col))
+            continue;
+            
+        if (matrix[row][col] == 1)
+            continue;
+        
+        matrix[row][col] = 1;
+    
+        fillStack.push([row + 1, col]);
+        fillStack.push([row - 1, col]);
+        fillStack.push([row, col + 1]);
+        fillStack.push([row, col - 1]);
+    }
+}
+
+// Returns true if specified row and col coordinates are in the matrix
+function validCoordinates(matrix, row, col)
+{
+    return (row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length);
+}
+
+// Returns a matrix of specified number of rows and cols
+function generateMatrix(rows, cols)
+{
+    var matrix = [];
+
+    for(var row = 0; row < rows; row++)
+    {
+        var arRow = new Array(cols);
+        
+        for(var col = 0; col < cols; col++)
+        {
+            arRow[col] = 0;
+        }
+        
+        matrix.push(arRow);
+    }
+    
+    return matrix;
+}
+
 
 runServer({
   info: info,
