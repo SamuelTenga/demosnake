@@ -270,7 +270,7 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   console.log(`FILL-UP ${fillUp}`);
   console.log(`FILL-DOWN ${fillDown}`);
 
-  var fillStack = [];
+
   var test0 = matrix;
   var test1 = matrix;
   var test2 = matrix;
@@ -290,6 +290,7 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
 
 }
 
+var fillStack = [];
 // Flood fill algorithm implemented recursively
 function fillMatrix1(matrix, row, col, counter)
 {
