@@ -73,6 +73,7 @@ function move(gameState) {
   if (gameState.name == 'wrapped') {
     console.log("Don't remove borders, this is a wrapped game")
   }else {
+    console.log(gameState.name);
     if (myHead.y == 0) {       
       isMoveSafe.down = false;
       console.log(`remove down - border`);
