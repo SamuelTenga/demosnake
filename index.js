@@ -70,7 +70,7 @@ function move(gameState) {
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   var boardWidth = gameState.board.width;
   var boardHeight = gameState.board.height;
-  if (gameState.ruleset == 'wrapped') {
+  if (gameState.game.ruleset.name == 'wrapped') {
     console.log("Don't remove borders, this is a wrapped game")
   } else {
     console.log(JSON.stringify(gameState));
