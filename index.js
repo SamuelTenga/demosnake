@@ -271,11 +271,14 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   console.log(`FILL-DOWN ${fillDown}`);
 
 
-  var test0 = matrix;
-  var test1 = matrix;
-  var test2 = matrix;
-  var test3 = matrix;
-  var test4 = matrix;
+  var test0 = generateMatrix(boardHeight, boardWidth);
+    snakebodies.forEach(hazzard => {
+      test0[hazzard.y][hazzard.x] = 1;
+    });
+  var test1 = test0;
+  var test2 = test0;
+  var test3 = test0;
+  var test4 = test0;
   fillMatrix2(test1, myHead.y, myHead.x + 1);
   fillMatrix2(test2, myHead.y, myHead.x - 1);
   fillMatrix2(test3, myHead.y + 1, myHead.x);
@@ -287,7 +290,7 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
     test3.flat(1).reduce((a , b) => a + b), 
     test4.flat(1).reduce((a , b) => a + b)
   );
-  console.log(test0.flat(1));
+  
 
 }
 
