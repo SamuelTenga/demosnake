@@ -288,8 +288,6 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   console.log(test2.flat(1).reduce((a , b) => a + b)); 
   console.log(test3.flat(1).reduce((a , b) => a + b)); 
   console.log(test4.flat(1).reduce((a , b) => a + b)); 
-  );
-  
 
 }
 
