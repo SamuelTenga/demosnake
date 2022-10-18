@@ -167,19 +167,19 @@ function move(gameState) {
   if (safeMoves.length == 0) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Carry on :)`);
     if (myNeck.x < myHead.x) {        // Neck is left of head, move right
-      console.log(`carry on - right`);
+      console.log(`MOVE ${gameState.turn}: carry on - right`);
       console.log(`----------------`);
       return { move: "right" };
     } else if (myNeck.x > myHead.x) { // Neck is right of head, move left
-      console.log(`carry on - left`);
+      console.log(`MOVE ${gameState.turn}: carry on - left`);
       console.log(`----------------`);
       return { move: "left" };
     } else if (myNeck.y < myHead.y) { // Neck is below head, move up
-      console.log(`carry on - up`);
+      console.log(`MOVE ${gameState.turn}: carry on - up`);
       console.log(`----------------`);
       return { move: "up" };
     } else if (myNeck.y > myHead.y) { // Neck is above head, move down
-      console.log(`carry on - down`);
+      console.log(`MOVE ${gameState.turn}: carry on - down`);
       console.log(`----------------`);
       return { move: "down" };
     }
@@ -210,22 +210,22 @@ function move(gameState) {
     });
 
     if (nearestFood.x > myHead.x && isMoveSafe.right) {
-      console.log("nearestFood right");
+      console.log(`MOVE ${gameState.turn}: nearestFood right`);
       console.log(`----------------`);
       return { move: "right" };
     }
     if (  myHead.x > nearestFood.x && isMoveSafe.left) {
-      console.log("nearestFood left");
+      console.log(`MOVE ${gameState.turn}: nearestFood left`);
       console.log(`----------------`);
       return { move: "left" };
     }
     if (nearestFood.y > myHead.y && isMoveSafe.up) {
-      console.log("nearestFood up");
+      console.log(`MOVE ${gameState.turn}: nearestFood up`);
       console.log(`----------------`);
       return { move: "up" };
     }
     if (  myHead.y > nearestFood.y && isMoveSafe.down) {
-      console.log("nearestFood down");
+      console.log(`MOVE ${gameState.turn}: nearestFood down`);
       console.log(`----------------`);
       return { move: "down" };
     }
