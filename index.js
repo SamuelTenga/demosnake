@@ -250,16 +250,13 @@ function move(gameState) {
 
 
 function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
-  var floodMatrix = generateMatrix(boardHeight, boardWidth);
-  snakebodies.forEach(hazzard => {
-    floodMatrix[hazzard.y][hazzard.x] = 1;
-  });
+
   console.log("pre flood");
   // console.log(matrix);
-  var rightMatrix = floodMatrix;
-  var leftMatrix = floodMatrix;
-  var upMatrix = floodMatrix;
-  var downMatrix = floodMatrix;
+  var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   
   var fillRight = fillMatrix1(rightMatrix, myHead.y, myHead.x + 1, 0);
   var fillLeft = fillMatrix1(leftMatrix, myHead.y, myHead.x - 1, 0);
@@ -271,17 +268,13 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   console.log(`FILL-DOWN ${fillDown}`);
 
 
-  var test0 = generateMatrix(boardHeight, boardWidth);
-    snakebodies.forEach(hazzard => {
-      test0[hazzard.y][hazzard.x] = 1;
-    });
-  var test1 = test0;
-  var test2 = test0;
-  var test3 = test0;
-  var test4 = test0;
+  var test0 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var test1 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var test2 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var test3 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var test4 = generateMatrix(boardHeight, boardWidth, snakebodies);
   fillMatrix2(test1, myHead.y, myHead.x + 1);
   fillMatrix2(test2, myHead.y, myHead.x - 1);
-  fillStack = [];
   fillMatrix2(test3, myHead.y + 1, myHead.x);
   fillMatrix2(test4, myHead.y - 1, myHead.x);
   console.log(test0.flat(1).reduce((a , b) => a + b)); 
@@ -344,7 +337,7 @@ function validCoordinates(matrix, row, col)
 }
 
 // Returns a matrix of specified number of rows and cols
-function generateMatrix(rows, cols)
+function generateMatrix(rows, cols, snakes)
 {
     var matrix = [];
 
@@ -359,6 +352,11 @@ function generateMatrix(rows, cols)
         
         matrix.push(arRow);
     }
+    // fill ones with ones
+    snakes.forEach(hazzard => {
+      matrix[hazzard.y][hazzard.x] = 1;
+    });
+
     
     return matrix;
 }
