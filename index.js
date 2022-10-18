@@ -21,7 +21,7 @@ function info() {
   return {
     apiversion: "1",
     author: "Sam's Snake ",      
-    color: "#f59b25", 
+    color: "#000000", 
     head: "beluga",  
     tail: "skinny", 
   };
