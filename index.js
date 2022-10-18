@@ -250,16 +250,16 @@ function move(gameState) {
 
 
 function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
-  var matrix = generateMatrix(boardHeight, boardWidth);
+  var floodMatrix = generateMatrix(boardHeight, boardWidth);
   snakebodies.forEach(hazzard => {
-    matrix[hazzard.y][hazzard.x] = 1;
+    floodMatrix[hazzard.y][hazzard.x] = 1;
   });
   console.log("pre flood");
   // console.log(matrix);
-  var rightMatrix = matrix;
-  var leftMatrix = matrix;
-  var upMatrix = matrix;
-  var downMatrix = matrix;
+  var rightMatrix = floodMatrix;
+  var leftMatrix = floodMatrix;
+  var upMatrix = floodMatrix;
+  var downMatrix = floodMatrix;
   
   var fillRight = fillMatrix1(rightMatrix, myHead.y, myHead.x + 1, 0);
   var fillLeft = fillMatrix1(leftMatrix, myHead.y, myHead.x - 1, 0);
@@ -281,6 +281,7 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   var test4 = test0;
   fillMatrix2(test1, myHead.y, myHead.x + 1);
   fillMatrix2(test2, myHead.y, myHead.x - 1);
+  fillStack = [];
   fillMatrix2(test3, myHead.y + 1, myHead.x);
   fillMatrix2(test4, myHead.y - 1, myHead.x);
   console.log(test0.flat(1).reduce((a , b) => a + b)); 
