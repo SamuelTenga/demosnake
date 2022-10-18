@@ -284,6 +284,7 @@ function fillMatrix1(matrix, row, col, counter)
     fillMatrix1(matrix, row - 1, col);
     fillMatrix1(matrix, row, col + 1 );
     fillMatrix1(matrix, row, col -1 );
+    return counter;
 }
 
 // Flood fill algorithm implemented with a stack on the heap
