@@ -70,21 +70,24 @@ function move(gameState) {
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   var boardWidth = gameState.board.width;
   var boardHeight = gameState.board.height;
+  if (gameState.name == 'wrapped') {
+    console.log("Don't remove borders, this is a wrapped game")
+  }else {
+    if (myHead.y == 0) {       
+      isMoveSafe.down = false;
+      console.log(`remove down - border`);
+    } else if (myHead.y == boardHeight-1) { 
+      isMoveSafe.up = false;
+      console.log(`remove up - border`);
+    } 
 
-  if (myHead.y == 0) {       
-    isMoveSafe.down = false;
-    console.log(`remove down - border`);
-  } else if (myHead.y == boardHeight-1) { 
-    isMoveSafe.up = false;
-    console.log(`remove up - border`);
-  } 
-
-  if (myHead.x == boardWidth-1) { 
-    isMoveSafe.right = false;
-    console.log(`remove right - border`);
-  } else if (myHead.x == 0) { 
-    isMoveSafe.left = false;
-    console.log(`remove left - border`);
+    if (myHead.x == boardWidth-1) { 
+      isMoveSafe.right = false;
+      console.log(`remove right - border`);
+    } else if (myHead.x == 0) { 
+      isMoveSafe.left = false;
+      console.log(`remove left - border`);
+    }
   }
  
 
@@ -179,15 +182,19 @@ function move(gameState) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Carry on :)`);
     if (myNeck.x < myHead.x) {        // Neck is left of head, move right
       console.log(`carry on - right`);
+      console.log(`----------------`);
       return { move: "right" };
     } else if (myNeck.x > myHead.x) { // Neck is right of head, move left
       console.log(`carry on - left`);
+      console.log(`----------------`);
       return { move: "left" };
     } else if (myNeck.y < myHead.y) { // Neck is below head, move up
       console.log(`carry on - up`);
+      console.log(`----------------`);
       return { move: "up" };
     } else if (myNeck.y > myHead.y) { // Neck is above head, move down
       console.log(`carry on - down`);
+      console.log(`----------------`);
       return { move: "down" };
     }
     return { move: "down" };
@@ -215,18 +222,22 @@ function move(gameState) {
 
     if (nearestFood.x > myHead.x && isMoveSafe.right) {
       console.log("nearestFood right");
+      console.log(`----------------`);
       return { move: "right" };
     }
     if (  myHead.x > nearestFood.x && isMoveSafe.left) {
       console.log("nearestFood left");
+      console.log(`----------------`);
       return { move: "left" };
     }
     if (nearestFood.y > myHead.y && isMoveSafe.up) {
       console.log("nearestFood up");
+      console.log(`----------------`);
       return { move: "up" };
     }
     if (  myHead.y > nearestFood.y && isMoveSafe.down) {
       console.log("nearestFood down");
+      console.log(`----------------`);
       return { move: "down" };
     }
   }
