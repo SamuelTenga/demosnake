@@ -53,17 +53,14 @@ function move(gameState) {
   // We've included code to prevent your Battlesnake from moving backwards
   const myHead = gameState.you.body[0];
   const myNeck = gameState.you.body[1];
+  var boardWidth = gameState.board.width;
+  var boardHeight = gameState.board.height;
 
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  var boardWidth = gameState.board.width;
-  var boardHeight = gameState.board.height;
   if (gameState.game.ruleset.name == 'wrapped') {
     console.log("Don't remove borders, this is a wrapped game")
   } else {
-    console.log(JSON.stringify(gameState));
-    console.log(JSON.stringify(gameState.game.ruleset.name));
-    console.log(JSON.stringify(gameState.game.ruleset));
     if (myHead.y == 0) {       
       isMoveSafe.down = false;
       console.log(`remove down - border`);
@@ -163,9 +160,6 @@ function move(gameState) {
   }
 
 
-
-
-
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
   console.log(safeMoves);
@@ -194,36 +188,16 @@ function move(gameState) {
 
   //FLOODFILL ? LETS TRY
   var matrix = generateMatrix(boardHeight, boardWidth);
-  console.log("init fllod");
-  console.log(matrix);
   snakebodies.forEach(hazzard => {
     matrix[hazzard.y][hazzard.x] = 1;
   } );
   console.log("pre flood");
-  console.log(matrix);
+  // console.log(matrix);
 
-  var rightCopy = matrix;
-  var leftCopy = matrix;
-  var upCopy = matrix;
-  var downCopy = matrix;
-  // var counter=0;
-  var fillRight = fillMatrix1(rightCopy, myHead.y, myHead.x+1, 0);
-  var fillLeft = fillMatrix1(leftCopy, myHead.y, myHead.x-1, 0);
-  var fillUp = fillMatrix1(upCopy, myHead.y+1, myHead.x, 0);
-  var fillDown = fillMatrix1(downCopy, myHead.y-1, myHead.x, 0);
-  
+
+  var fillRight = fillMatrix1(matrix, myHead.x-1, myHead.y, 0);
   console.log(`FILL-RIGHT ${fillRight}`);
-  console.log(`FILL-LEFT ${fillLeft}`);
-  console.log(`FILL-UP ${fillUp}`);
-  console.log(`FILL-DOWN ${fillDown}`);
 
-  
-  console.log("sum matrix");
-  console.log(matrix.flat().reduce((a , b) => a + b));
-  console.log(rightCopy.flat().reduce((a , b) => a + b));
-  console.log(leftCopy.flat().reduce((a , b) => a + b));
-  console.log(upCopy.flat().reduce((a , b) => a + b));
-  console.log(downCopy.flat().reduce((a , b) => a + b));
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
