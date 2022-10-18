@@ -283,12 +283,11 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   fillMatrix2(test2, myHead.y, myHead.x - 1);
   fillMatrix2(test3, myHead.y + 1, myHead.x);
   fillMatrix2(test4, myHead.y - 1, myHead.x);
-  console.log(
-    test0.flat(1).reduce((a , b) => a + b), 
-    test1.flat(1).reduce((a , b) => a + b), 
-    test2.flat(1).reduce((a , b) => a + b), 
-    test3.flat(1).reduce((a , b) => a + b), 
-    test4.flat(1).reduce((a , b) => a + b)
+  console.log(test0.flat(1).reduce((a , b) => a + b)); 
+  console.log(test1.flat(1).reduce((a , b) => a + b)); 
+  console.log(test2.flat(1).reduce((a , b) => a + b)); 
+  console.log(test3.flat(1).reduce((a , b) => a + b)); 
+  console.log(test4.flat(1).reduce((a , b) => a + b)); 
   );
   
 
