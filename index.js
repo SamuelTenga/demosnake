@@ -206,20 +206,24 @@ function move(gameState) {
   var leftCopy = matrix;
   var upCopy = matrix;
   var downCopy = matrix;
-  var counter=0;
-  var fillRight = fillMatrix1(rightCopy, myHead.y, myHead.x+1, counter);
-  console.log(`FILL- ${counter}`);
-  var fillLeft = fillMatrix1(leftCopy, myHead.y, myHead.x-1, counter);
-  console.log(`FILL- ${counter}`);
-  var fillUp = fillMatrix1(upCopy, myHead.y+1, myHead.x, counter);
-  console.log(`FILL- ${counter}`);
-  var fillDown = fillMatrix1(downCopy, myHead.y-1, myHead.x, counter);
-  console.log(`FILL- ${counter}`);
+  // var counter=0;
+  var fillRight = fillMatrix1(rightCopy, myHead.y, myHead.x+1, 0);
+  var fillLeft = fillMatrix1(leftCopy, myHead.y, myHead.x-1, 0);
+  var fillUp = fillMatrix1(upCopy, myHead.y+1, myHead.x, 0);
+  var fillDown = fillMatrix1(downCopy, myHead.y-1, myHead.x, 0);
   
   console.log(`FILL-RIGHT ${fillRight}`);
   console.log(`FILL-LEFT ${fillLeft}`);
   console.log(`FILL-UP ${fillUp}`);
   console.log(`FILL-DOWN ${fillDown}`);
+
+  
+  console.log("sum matrix");
+  console.log(matrix.flat().reduce((a , b) => a + b));
+  console.log(rightCopy.flat().reduce((a , b) => a + b));
+  console.log(leftCopy.flat().reduce((a , b) => a + b));
+  console.log(upCopy.flat().reduce((a , b) => a + b));
+  console.log(downCopy.flat().reduce((a , b) => a + b));
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
@@ -281,7 +285,7 @@ function fillMatrix1(matrix, row, col, counter)
     counter++;
 
     counter = fillMatrix1(matrix, row + 1, col, counter);
-    counter = fillMatrix1(matrix, row - 1, col. counter);
+    counter = fillMatrix1(matrix, row - 1, col, counter);
     counter = fillMatrix1(matrix, row, col + 1 , counter);
     counter = fillMatrix1(matrix, row, col -1 , counter);
     return counter;
