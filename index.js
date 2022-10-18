@@ -158,7 +158,8 @@ function move(gameState) {
     isMoveSafe.right = false;
     console.log(`remove right - suicide`);
   }
-
+  //FLOODFILL ? LETS TRY
+  testFlood(boardHeight, boardWidth, snakebodies, myHead);
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
@@ -186,8 +187,7 @@ function move(gameState) {
     return { move: "down" };
   }
 
-  //FLOODFILL ? LETS TRY
-        testFlood(boardHeight, boardWidth, snakebodies, myHead);
+  
 
 
 
@@ -287,7 +287,7 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
     test3.flat(1).reduce((a , b) => a + b), 
     test4.flat(1).reduce((a , b) => a + b)
   );
-  console.log(test1.flat(1));
+  console.log(test0.flat(1));
 
 }
 
