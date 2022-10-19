@@ -21,14 +21,15 @@ function info() {
   return {
     apiversion: "1",
     author: "SamuelTenga",      
-    color: "#000000", 
+    color: "#b3e0ff", 
     head: "beach-puffin",  
     tail: "beach-puffin", 
   };
 }
 
 // TRASH TALK
-const TRASH = ["Never gonna give you up","Never gonna let you down", "Never gonna run around and desert you", "Never gonna make you cry", "Never gonna say goodbye",  "Never gonna tell a lie and hurt you"];
+const TRASH = ["Never gonna give you up","Never gonna let you down", "Never gonna run around and desert you", 
+"Never gonna make you cry", "Never gonna say goodbye",  "Never gonna tell a lie and hurt you"];
 
 // start is called when your Battlesnake begins a game
 function start(gameState) {
@@ -66,11 +67,12 @@ function move(gameState) {
   const myHead = gameState.you.body[0];
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
-  const trash_sentance =Math.floor(gameState.turn /10);
+  const trash_sentance = Math.floor(gameState.turn /10)%6;
+  console.log(TRASH[trash_sentance]);
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   if (gameState.game.ruleset.name == 'wrapped') {
-    console.log("Don't remove borders, this is a wrapped game")
+    console.log("Don't remove borders, this is a wrapped game");
   } else {
     if (myHead.y == 0) {       
       isMoveSafe.down = false;
