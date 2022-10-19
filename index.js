@@ -38,6 +38,13 @@ function end(gameState) {
   console.log("GAME OVER\n");
 }
 
+
+let moveSpaceCounter = {
+  up: 0,
+  down: 0,
+  left: 0,
+  right: 0
+};
 // move is called on every turn and returns your next move
 // Valid moves are "up", "down", "left", or "right"
 // See https://docs.battlesnake.com/api/example-move for available data
@@ -50,12 +57,7 @@ function move(gameState) {
     right: true
   };
 
-  let moveSpaceCounter = {
-    up: 0,
-    down: 0,
-    left: 0,
-    right: 0
-  };
+
 
   // We've included code to prevent your Battlesnake from moving backwards
   const myHead = gameState.you.body[0];
