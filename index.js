@@ -199,10 +199,10 @@ function move(gameState) {
       Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b)
     );
     console.log(sortedBySurvival);
-    console.log(Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1]);
-
+    var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
+    console.log(`MOVE ${gameState.turn}: ${safestMove}`);
     console.log(`----------------`);
-    return { move: "down" };
+    return { move: safestMove };
   }
 
   
