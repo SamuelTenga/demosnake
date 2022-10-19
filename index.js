@@ -22,8 +22,8 @@ function info() {
     apiversion: "1",
     author: "SamuelTenga",      
     color: "#ffd9b3", 
-    head: "beluga",  
-    tail: "skinny", 
+    head: "beach-puffin",  
+    tail: "beach-puffin", 
   };
 }
 
