@@ -21,7 +21,7 @@ function info() {
   return {
     apiversion: "1",
     author: "SamuelTenga",      
-    color: "#ffd9b3", 
+    color: "#00ff00", 
     head: "beach-puffin",  
     tail: "beach-puffin", 
   };
