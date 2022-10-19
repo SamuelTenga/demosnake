@@ -209,11 +209,11 @@ function move(gameState) {
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
 
-  if(gameState.you.health > 25){
-    console.log(`MOVE ${gameState.turn}: ${safestMove} - Not hungry yet`);
-    console.log(`----------------`);
-    return { move: safestMove };
-  } else {
+    // if(gameState.you.health > 25){
+    //   console.log(`MOVE ${gameState.turn}: ${safestMove} - Not hungry yet`);
+    //   console.log(`----------------`);
+    //   return { move: safestMove };
+    // } else {
     var food = gameState.board.food;
     if(food.length> 0 ){
       var nearestFood;
@@ -251,7 +251,7 @@ function move(gameState) {
         return { move: "down" };
       }
     }
-  }
+  // }
   // Choose a random move from the safe moves
   console.log(`MOVE ${gameState.turn}: ${safestMove} - Fallback`);
   console.log(`----------------`);
