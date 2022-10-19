@@ -192,14 +192,11 @@ function move(gameState) {
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
   console.log(safeMoves);
 
+  const sortedBySurvival = Object.fromEntries(Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b));
+  var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
 
   if (safeMoves.length == 0) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
-    const sortedBySurvival = Object.fromEntries(
-      Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b)
-    );
-    console.log(sortedBySurvival);
-    var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
     console.log(`MOVE ${gameState.turn}: ${safestMove}`);
     console.log(`----------------`);
     return { move: safestMove };
@@ -211,49 +208,54 @@ function move(gameState) {
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
-  var food = gameState.board.food;
-  if(food.length> 0 ){
-    var nearestFood;
-    var distanceToNearestFood=99;
-    food.forEach(thisFood => {
-      var foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
-      
-      if( distanceToNearestFood > foodDistance){
-        nearestFood = thisFood;
-        distanceToNearestFood=foodDistance;
-        console.log("new food");
-        console.log(nearestFood);
-        console.log(distanceToNearestFood);
-      }
-    });
 
-    if (nearestFood.x > myHead.x && isMoveSafe.right) {
-      console.log(`MOVE ${gameState.turn}: nearestFood right`);
-      console.log(`----------------`);
-      return { move: "right" };
-    }
-    if (  myHead.x > nearestFood.x && isMoveSafe.left) {
-      console.log(`MOVE ${gameState.turn}: nearestFood left`);
-      console.log(`----------------`);
-      return { move: "left" };
-    }
-    if (nearestFood.y > myHead.y && isMoveSafe.up) {
-      console.log(`MOVE ${gameState.turn}: nearestFood up`);
-      console.log(`----------------`);
-      return { move: "up" };
-    }
-    if (  myHead.y > nearestFood.y && isMoveSafe.down) {
-      console.log(`MOVE ${gameState.turn}: nearestFood down`);
-      console.log(`----------------`);
-      return { move: "down" };
+  if(gameState.you.health > 25){
+    console.log(`MOVE ${gameState.turn}: ${safestMove} - Not hungry yet`);
+    console.log(`----------------`);
+    return { move: safestMove };
+  } else {
+    var food = gameState.board.food;
+    if(food.length> 0 ){
+      var nearestFood;
+      var distanceToNearestFood=99;
+      food.forEach(thisFood => {
+        var foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
+        
+        if( distanceToNearestFood > foodDistance){
+          nearestFood = thisFood;
+          distanceToNearestFood=foodDistance;
+          console.log("new food");
+          console.log(nearestFood);
+          console.log(distanceToNearestFood);
+        }
+      });
+
+      if (nearestFood.x > myHead.x && isMoveSafe.right) {
+        console.log(`MOVE ${gameState.turn}: nearestFood right`);
+        console.log(`----------------`);
+        return { move: "right" };
+      }
+      if (  myHead.x > nearestFood.x && isMoveSafe.left) {
+        console.log(`MOVE ${gameState.turn}: nearestFood left`);
+        console.log(`----------------`);
+        return { move: "left" };
+      }
+      if (nearestFood.y > myHead.y && isMoveSafe.up) {
+        console.log(`MOVE ${gameState.turn}: nearestFood up`);
+        console.log(`----------------`);
+        return { move: "up" };
+      }
+      if (  myHead.y > nearestFood.y && isMoveSafe.down) {
+        console.log(`MOVE ${gameState.turn}: nearestFood down`);
+        console.log(`----------------`);
+        return { move: "down" };
+      }
     }
   }
   // Choose a random move from the safe moves
-  const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
-
-  console.log(`MOVE ${gameState.turn}: ${nextMove}, HEAD X=${myHead.x}, Y=${myHead.y}, Width: ${boardWidth}, Height: ${boardHeight}`)
+  console.log(`MOVE ${gameState.turn}: ${safestMove} - Fallback`);
   console.log(`----------------`);
-  return { move: nextMove };
+  return { move: safestMove };
 }
 
 
