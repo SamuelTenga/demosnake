@@ -172,19 +172,19 @@ function move(gameState) {
   let myLength = gameState.you.length;
 
   if(myLength > moveSpaceCounter.right) {
-    safeMoves.right = false;
+    isMoveSafe.right = false;
     console.log(`remove right - i am too fat`);
   } 
   if(myLength > moveSpaceCounter.left) {
-    safeMoves.left = false;
+    isMoveSafe.left = false;
     console.log(`remove left - i am too fat`);
   }
   if(myLength > moveSpaceCounter.up) {
-    safeMoves.up = false;
+    isMoveSafe.up = false;
     console.log(`remove up - i am too fat`);
   } 
   if(myLength > moveSpaceCounter.down) {
-    safeMoves.down = false;
+    isMoveSafe.down = false;
     console.log(`remove down - i am too fat`);
   }
 
