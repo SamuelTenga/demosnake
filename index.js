@@ -191,31 +191,16 @@ function move(gameState) {
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
   console.log(safeMoves);
-  const sortedBySurvival = Object.fromEntries(
-    Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b)
-  );
 
-  console.log(sortedBySurvival);
 
   if (safeMoves.length == 0) {
-    console.log(`MOVE ${gameState.turn}: No safe moves detected! Carry on :)`);
-    if (myNeck.x < myHead.x) {        // Neck is left of head, move right
-      console.log(`MOVE ${gameState.turn}: carry on - right`);
-      console.log(`----------------`);
-      return { move: "right" };
-    } else if (myNeck.x > myHead.x) { // Neck is right of head, move left
-      console.log(`MOVE ${gameState.turn}: carry on - left`);
-      console.log(`----------------`);
-      return { move: "left" };
-    } else if (myNeck.y < myHead.y) { // Neck is below head, move up
-      console.log(`MOVE ${gameState.turn}: carry on - up`);
-      console.log(`----------------`);
-      return { move: "up" };
-    } else if (myNeck.y > myHead.y) { // Neck is above head, move down
-      console.log(`MOVE ${gameState.turn}: carry on - down`);
-      console.log(`----------------`);
-      return { move: "down" };
-    }
+    console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
+    const sortedBySurvival = Object.fromEntries(
+      Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b)
+    );
+    console.log(sortedBySurvival);
+    console.log(sortedBySurvival[sortedBySurvival.length-1]);
+
     console.log(`----------------`);
     return { move: "down" };
   }
