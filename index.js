@@ -20,8 +20,8 @@ function info() {
 
   return {
     apiversion: "1",
-    author: "Sam's Snake ",      
-    color: "#000000", 
+    author: "SamuelTenga",      
+    color: "#ffd9b3", 
     head: "beluga",  
     tail: "skinny", 
   };
@@ -30,12 +30,12 @@ function info() {
 // start is called when your Battlesnake begins a game
 function start(gameState) {
   console.log("GAME START");
-  console.log(JSON.stringify(gameState));
 }
 
 // end is called when your Battlesnake finishes a game
 function end(gameState) {
   console.log("GAME OVER\n");
+  console.log(JSON.stringify(gameState));
 }
 
 
@@ -61,9 +61,8 @@ function move(gameState) {
 
   // We've included code to prevent your Battlesnake from moving backwards
   const myHead = gameState.you.body[0];
-  const myNeck = gameState.you.body[1];
-  var boardWidth = gameState.board.width;
-  var boardHeight = gameState.board.height;
+  const boardWidth = gameState.board.width;
+  const boardHeight = gameState.board.height;
 
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
@@ -122,14 +121,12 @@ function move(gameState) {
     }
     return false;
   });
-  
   let isDownUnsafe = snakebodies.filter(element => {
     if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
       return true;
     }
     return false;
   });
-
     
   let isLeftUnsafe = snakebodies.filter(element => {
     if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
@@ -137,16 +134,12 @@ function move(gameState) {
     }
     return false;
   });
-
   let isRigihtUnsafe = snakebodies.filter(element => {
     if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
       return true;
     }
     return false;
   });
-  
-  
-  
 
   if(isUpUnsafe.length == 1){
     isMoveSafe.up = false;
@@ -168,7 +161,7 @@ function move(gameState) {
     console.log(`remove right - suicide`);
   }
   //FLOODFILL ? LETS TRY
-  testFlood(boardHeight, boardWidth, snakebodies, myHead);
+  floodBoard(boardHeight, boardWidth, snakebodies, myHead);
   let myLength = gameState.you.length;
 
   if(myLength > moveSpaceCounter.right) {
@@ -202,56 +195,45 @@ function move(gameState) {
     return { move: safestMove };
   }
 
-  
-
-
-
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-  // food = gameState.board.food;
+  var food = gameState.board.food;
+  if(food.length> 0 ){
+    var nearestFood;
+    var distanceToNearestFood=99;
+    food.forEach(thisFood => {
+      var foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
+      
+      if( distanceToNearestFood > foodDistance){
+        nearestFood = thisFood;
+        distanceToNearestFood=foodDistance;
+        console.log("new food");
+        console.log(nearestFood);
+        console.log(distanceToNearestFood);
+      }
+    });
 
-    // if(gameState.you.health > 25){
-    //   console.log(`MOVE ${gameState.turn}: ${safestMove} - Not hungry yet`);
-    //   console.log(`----------------`);
-    //   return { move: safestMove };
-    // } else {
-    var food = gameState.board.food;
-    if(food.length> 0 ){
-      var nearestFood;
-      var distanceToNearestFood=99;
-      food.forEach(thisFood => {
-        var foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
-        
-        if( distanceToNearestFood > foodDistance){
-          nearestFood = thisFood;
-          distanceToNearestFood=foodDistance;
-          console.log("new food");
-          console.log(nearestFood);
-          console.log(distanceToNearestFood);
-        }
-      });
-
-      if (nearestFood.x > myHead.x && isMoveSafe.right) {
-        console.log(`MOVE ${gameState.turn}: nearestFood right`);
-        console.log(`----------------`);
-        return { move: "right" };
-      }
-      if (  myHead.x > nearestFood.x && isMoveSafe.left) {
-        console.log(`MOVE ${gameState.turn}: nearestFood left`);
-        console.log(`----------------`);
-        return { move: "left" };
-      }
-      if (nearestFood.y > myHead.y && isMoveSafe.up) {
-        console.log(`MOVE ${gameState.turn}: nearestFood up`);
-        console.log(`----------------`);
-        return { move: "up" };
-      }
-      if (  myHead.y > nearestFood.y && isMoveSafe.down) {
-        console.log(`MOVE ${gameState.turn}: nearestFood down`);
-        console.log(`----------------`);
-        return { move: "down" };
-      }
+    if (nearestFood.x > myHead.x && isMoveSafe.right) {
+      console.log(`MOVE ${gameState.turn}: nearestFood right`);
+      console.log(`----------------`);
+      return { move: "right" };
     }
-  // }
+    if (  myHead.x > nearestFood.x && isMoveSafe.left) {
+      console.log(`MOVE ${gameState.turn}: nearestFood left`);
+      console.log(`----------------`);
+      return { move: "left" };
+    }
+    if (nearestFood.y > myHead.y && isMoveSafe.up) {
+      console.log(`MOVE ${gameState.turn}: nearestFood up`);
+      console.log(`----------------`);
+      return { move: "up" };
+    }
+    if (  myHead.y > nearestFood.y && isMoveSafe.down) {
+      console.log(`MOVE ${gameState.turn}: nearestFood down`);
+      console.log(`----------------`);
+      return { move: "down" };
+    }
+  }
+
   // Choose a random move from the safe moves
   console.log(`MOVE ${gameState.turn}: ${safestMove} - Fallback`);
   console.log(`----------------`);
@@ -260,107 +242,67 @@ function move(gameState) {
 
 
 
+function floodBoard(boardHeight, boardWidth, snakebodies, myHead) {
 
-
-
-
-
-
-
-
-
-function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
-
-  console.log("pre flood");
-  // console.log(matrix);
   var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   
-  moveSpaceCounter.right = fillMatrix1(rightMatrix, myHead.y, myHead.x + 1, 0);
-  moveSpaceCounter.left = fillMatrix1(leftMatrix, myHead.y, myHead.x - 1, 0);
-  moveSpaceCounter.up = fillMatrix1(upMatrix, myHead.y + 1, myHead.x, 0);
-  moveSpaceCounter.down = fillMatrix1(downMatrix, myHead.y - 1, myHead.x, 0);
-  console.log(`Movefill-Order`);
+  moveSpaceCounter.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, 0);
+  moveSpaceCounter.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1, 0);
+  moveSpaceCounter.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x, 0);
+  moveSpaceCounter.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, 0);
   console.log(moveSpaceCounter);
 
 }
 
 var fillStack = [];
 // Flood fill algorithm implemented recursively
-function fillMatrix1(matrix, row, col, counter)
+function fillMatrix(matrix, y, x, counter)
 {
-    if (!validCoordinates(matrix, row, col))
-        return counter;
-        
-    if (matrix[row][col] == 1)
-        return counter;
-    
-    matrix[row][col] = 1;
-    counter++;
+  if (!validCoordinates(matrix, y, x))
+      return counter;
+      
+  if (matrix[y][x] == 1)
+      return counter;
+  
+  matrix[y][x] = 1;
+  counter++;
 
-    counter = fillMatrix1(matrix, row + 1, col, counter);
-    counter = fillMatrix1(matrix, row - 1, col, counter);
-    counter = fillMatrix1(matrix, row, col + 1 , counter);
-    counter = fillMatrix1(matrix, row, col -1 , counter);
-    return counter;
+  counter = fillMatrix(matrix, y + 1, x, counter);
+  counter = fillMatrix(matrix, y - 1, x, counter);
+  counter = fillMatrix(matrix, y, x + 1 , counter);
+  counter = fillMatrix(matrix, y, x -1 , counter);
+  return counter;
 }
 
-// Flood fill algorithm implemented with a stack on the heap
-// This algorithm will also work with big size matrixes
-function fillMatrix2(matrix, row, col)
-{
-    fillStack.push([row, col]);
-    
-    while(fillStack.length > 0)
-    {
-        var [row, col] = fillStack.pop();
-        
-        if (!validCoordinates(matrix, row, col))
-            continue;
-            
-        if (matrix[row][col] == 1)
-            continue;
-        
-        matrix[row][col] = 1;
-    
-        fillStack.push([row + 1, col]);
-        fillStack.push([row - 1, col]);
-        fillStack.push([row, col + 1]);
-        fillStack.push([row, col - 1]);
-    }
-}
 
 // Returns true if specified row and col coordinates are in the matrix
 function validCoordinates(matrix, row, col)
 {
-    return (row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length);
+  return (row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length);
 }
 
 // Returns a matrix of specified number of rows and cols
-function generateMatrix(rows, cols, snakes)
+function generateMatrix(yMax, xMax, snakes)
 {
-    var matrix = [];
-
-    for(var row = 0; row < rows; row++)
-    {
-        var arRow = new Array(cols);
-        
-        for(var col = 0; col < cols; col++)
-        {
-            arRow[col] = 0;
-        }
-        
-        matrix.push(arRow);
-    }
-    // fill ones with ones
-    snakes.forEach(hazzard => {
-      matrix[hazzard.y][hazzard.x] = 1;
-    });
-
-    
-    return matrix;
+  var matrix = [];
+  for(var row = 0; row < yMax; row++)
+  {
+      var arRow = new Array(xMax);
+      
+      for(var col = 0; col < xMax; col++)
+      {
+          arRow[col] = 0;
+      }
+      matrix.push(arRow);
+  }
+  // fill ones with ones
+  snakes.forEach(hazzard => {
+    matrix[hazzard.y][hazzard.x] = 1;
+  });
+  return matrix;
 }
 
 
