@@ -199,7 +199,7 @@ function move(gameState) {
       Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b)
     );
     console.log(sortedBySurvival);
-    console.log(sortedBySurvival[sortedBySurvival.length-1]);
+    console.log(Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1]);
 
     console.log(`----------------`);
     return { move: "down" };
