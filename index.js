@@ -191,6 +191,12 @@ function move(gameState) {
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
   console.log(safeMoves);
+  const sortedBySurvival = Object.fromEntries(
+    Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b)
+  );
+
+  console.log(sortedBySurvival);
+
   if (safeMoves.length == 0) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Carry on :)`);
     if (myNeck.x < myHead.x) {        // Neck is left of head, move right
