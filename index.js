@@ -50,6 +50,13 @@ function move(gameState) {
     right: true
   };
 
+  let moveSpaceCounter = {
+    up: 0,
+    down: 0,
+    left: 0,
+    right: 0
+  };
+
   // We've included code to prevent your Battlesnake from moving backwards
   const myHead = gameState.you.body[0];
   const myNeck = gameState.you.body[1];
@@ -258,30 +265,28 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   
-  var fillRight = fillMatrix1(rightMatrix, myHead.y, myHead.x + 1, 0);
-  var fillLeft = fillMatrix1(leftMatrix, myHead.y, myHead.x - 1, 0);
-  var fillUp = fillMatrix1(upMatrix, myHead.y + 1, myHead.x, 0);
-  var fillDown = fillMatrix1(downMatrix, myHead.y - 1, myHead.x, 0);
-  console.log(`FILL-RIGHT ${fillRight}`);
-  console.log(`FILL-LEFT ${fillLeft}`);
-  console.log(`FILL-UP ${fillUp}`);
-  console.log(`FILL-DOWN ${fillDown}`);
+  moveSpaceCounter.right = fillMatrix1(rightMatrix, myHead.y, myHead.x + 1, 0);
+  moveSpaceCounter.left = fillMatrix1(leftMatrix, myHead.y, myHead.x - 1, 0);
+  moveSpaceCounter.up = fillMatrix1(upMatrix, myHead.y + 1, myHead.x, 0);
+  moveSpaceCounter.down = fillMatrix1(downMatrix, myHead.y - 1, myHead.x, 0);
+  console.log(`Movefill-Order`);
+  console.log(moveSpaceCounter);
 
 
-  var test0 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var test1 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var test2 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var test3 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var test4 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  fillMatrix2(test1, myHead.y, myHead.x + 1);
-  fillMatrix2(test2, myHead.y, myHead.x - 1);
-  fillMatrix2(test3, myHead.y + 1, myHead.x);
-  fillMatrix2(test4, myHead.y - 1, myHead.x);
-  console.log(test0.flat(1).reduce((a , b) => a + b)); 
-  console.log(test1.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
-  console.log(test2.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
-  console.log(test3.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
-  console.log(test4.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
+  // var test0 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  // var test1 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  // var test2 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  // var test3 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  // var test4 = generateMatrix(boardHeight, boardWidth, snakebodies);
+  // fillMatrix2(test1, myHead.y, myHead.x + 1);
+  // fillMatrix2(test2, myHead.y, myHead.x - 1);
+  // fillMatrix2(test3, myHead.y + 1, myHead.x);
+  // fillMatrix2(test4, myHead.y - 1, myHead.x);
+  // console.log(test0.flat(1).reduce((a , b) => a + b)); 
+  // console.log(test1.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
+  // console.log(test2.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
+  // console.log(test3.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
+  // console.log(test4.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
 
 }
 
