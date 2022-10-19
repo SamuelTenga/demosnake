@@ -169,6 +169,24 @@ function move(gameState) {
   }
   //FLOODFILL ? LETS TRY
   testFlood(boardHeight, boardWidth, snakebodies, myHead);
+  let myLength = gameState.you.length;
+
+  if(myLength > moveSpaceCounter.right) {
+    safeMoves.right = false;
+    console.log(`remove right - i am too fat`);
+  } 
+  if(myLength > moveSpaceCounter.left) {
+    safeMoves.left = false;
+    console.log(`remove left - i am too fat`);
+  }
+  if(myLength > moveSpaceCounter.up) {
+    safeMoves.up = false;
+    console.log(`remove up - i am too fat`);
+  } 
+  if(myLength > moveSpaceCounter.down) {
+    safeMoves.down = false;
+    console.log(`remove down - i am too fat`);
+  }
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
@@ -273,22 +291,6 @@ function testFlood(boardHeight, boardWidth, snakebodies, myHead) {
   moveSpaceCounter.down = fillMatrix1(downMatrix, myHead.y - 1, myHead.x, 0);
   console.log(`Movefill-Order`);
   console.log(moveSpaceCounter);
-
-
-  // var test0 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  // var test1 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  // var test2 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  // var test3 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  // var test4 = generateMatrix(boardHeight, boardWidth, snakebodies);
-  // fillMatrix2(test1, myHead.y, myHead.x + 1);
-  // fillMatrix2(test2, myHead.y, myHead.x - 1);
-  // fillMatrix2(test3, myHead.y + 1, myHead.x);
-  // fillMatrix2(test4, myHead.y - 1, myHead.x);
-  // console.log(test0.flat(1).reduce((a , b) => a + b)); 
-  // console.log(test1.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
-  // console.log(test2.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
-  // console.log(test3.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
-  // console.log(test4.flat(1).reduce((a , b) => a + b)-test0.flat(1).reduce((a , b) => a + b)); 
 
 }
 
