@@ -31,6 +31,10 @@ function info() {
 // start is called when your Battlesnake begins a game
 function start(gameState) {
   console.log("GAME START");
+  if (gameState.game.ruleset.name == 'wrapped') {
+    console.log("Don't remove borders, this is a wrapped game");
+    wrapped = true;
+  }
 }
 
 // end is called when your Battlesnake finishes a game
@@ -39,6 +43,7 @@ function end(gameState) {
   console.log(JSON.stringify(gameState));
 }
 
+let wrapped=false;
 
 let moveSpaceCounter = {
   up: 0,
@@ -58,8 +63,6 @@ function move(gameState) {
     right: true
   };
 
-
-
   // We've included code to prevent your Battlesnake from moving backwards
   const myHead = gameState.you.body[0];
   const boardWidth = gameState.board.width;
@@ -69,6 +72,7 @@ function move(gameState) {
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   if (gameState.game.ruleset.name == 'wrapped') {
     console.log("Don't remove borders, this is a wrapped game");
+    console.log(wrapped);
   } else {
     if (myHead.y == 0) {       
       isMoveSafe.down = false;
