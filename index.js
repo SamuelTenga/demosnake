@@ -28,6 +28,13 @@ function info() {
 }
 
 
+class State {
+  constructor() {
+    this.maxDepth = 0;
+    this.nearestFood = 999;
+  }
+}
+
 // start is called when your Battlesnake begins a game
 function start(gameState) {
   console.log("GAME START");
@@ -49,11 +56,11 @@ let wrapped=false;
 let boardWidth = 0;
 let boardHeight = 0;
 
-let moveSpaceCounter = {
-  up: 0,
-  down: 0,
-  left: 0,
-  right: 0
+let stateMatrix = {
+  up: new State(),
+  down:new State(),
+  left: new State(),
+  right: new State()
 };
 // move is called on every turn and returns your next move
 // Valid moves are "up", "down", "left", or "right"
@@ -171,19 +178,19 @@ function move(gameState) {
   floodBoard(boardHeight, boardWidth, snakebodies, myHead);
   let myLength = gameState.you.length;
 
-  if(myLength > moveSpaceCounter.right) {
+  if(myLength > stateMatrix.right.maxDepth) {
     isMoveSafe.right = false;
     console.log(`remove right - i am too fat`);
   } 
-  if(myLength > moveSpaceCounter.left) {
+  if(myLength > stateMatrix.left.maxDepth) {
     isMoveSafe.left = false;
     console.log(`remove left - i am too fat`);
   }
-  if(myLength > moveSpaceCounter.up) {
+  if(myLength > stateMatrix.up.maxDepth) {
     isMoveSafe.up = false;
     console.log(`remove up - i am too fat`);
   } 
-  if(myLength > moveSpaceCounter.down) {
+  if(myLength > stateMatrix.down.maxDepth) {
     isMoveSafe.down = false;
     console.log(`remove down - i am too fat`);
   }
@@ -191,8 +198,8 @@ function move(gameState) {
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
   console.log(safeMoves);
-
-  const sortedBySurvival = Object.fromEntries(Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b));
+  console.log(stateMatrix);
+  const sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
   var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
 
   if (safeMoves.length == 0) {
@@ -264,36 +271,36 @@ function floodBoard(boardHeight, boardWidth, snakebodies, myHead) {
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   
-  moveSpaceCounter.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, 0);
-  moveSpaceCounter.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1, 0);
-  moveSpaceCounter.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x, 0);
-  moveSpaceCounter.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, 0);
-  console.log(moveSpaceCounter);
+  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, new State());
+  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1, new State());
+  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x, new State());
+  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, new State());
+  console.log(stateMatrix);
 
 }
 
 var fillStack = [];
 // Flood fill algorithm implemented recursively
-function fillMatrix(matrix, y, x, counter)
+function fillMatrix(matrix, y, x, state)
 {
   //should now work with wrapped games ? maybe
   y = y%boardHeight;
   x = x%boardWidth;
 
   if (!validCoordinates(matrix, y, x))
-      return counter;
+      return;
       
   if (matrix[y][x] == 1)
-      return counter;
+      return;
   
   matrix[y][x] = 1;
-  counter++;
+  state.maxDepth++;
 
-  counter = fillMatrix(matrix, y + 1, x, counter);
-  counter = fillMatrix(matrix, y - 1, x, counter);
-  counter = fillMatrix(matrix, y, x + 1 , counter);
-  counter = fillMatrix(matrix, y, x -1 , counter);
-  return counter;
+  fillMatrix(matrix, y + 1, x, state);
+  fillMatrix(matrix, y - 1, x, state);
+  fillMatrix(matrix, y, x + 1 , state);
+  fillMatrix(matrix, y, x -1 , state);
+  return;
 }
 
 
