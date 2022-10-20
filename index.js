@@ -68,7 +68,7 @@ function move(gameState) {
   };
 
   // We've included code to prevent your Battlesnake from moving backwards
-
+  const myHead = gameState.you.head;
 
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
