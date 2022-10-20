@@ -266,6 +266,10 @@ var fillStack = [];
 // Flood fill algorithm implemented recursively
 function fillMatrix(matrix, y, x, counter)
 {
+  //should now work with wrapped games ? maybe
+  y = y%boardHeight;
+  x = x%boardWidth;
+
   if (!validCoordinates(matrix, y, x))
       return counter;
       
