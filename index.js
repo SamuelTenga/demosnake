@@ -269,10 +269,10 @@ function floodBoard(boardHeight, boardWidth, snakebodies, myHead) {
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   
-  fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right);
-  fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left);
-  fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up);
-  fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down);
+  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right);
+  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left);
+  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up);
+  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down);
   console.log(stateMatrix);
 
 }
@@ -286,19 +286,19 @@ function fillMatrix(matrix, y, x, state)
   x = x%boardWidth;
 
   if (!validCoordinates(matrix, y, x))
-      return;
+      return state;
       
   if (matrix[y][x] == 1)
-      return;
+      return state;
   
   matrix[y][x] = 1;
   state.maxDepth++;
 
-  fillMatrix(matrix, y + 1, x, state);
-  fillMatrix(matrix, y - 1, x, state);
-  fillMatrix(matrix, y, x + 1 , state);
-  fillMatrix(matrix, y, x -1 , state);
-  return;
+  state = fillMatrix(matrix, y + 1, x, state);
+  state = fillMatrix(matrix, y - 1, x, state);
+  state = fillMatrix(matrix, y, x + 1 , state);
+  state = fillMatrix(matrix, y, x -1 , state);
+  return state;
 }
 
 
