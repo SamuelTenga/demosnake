@@ -243,22 +243,22 @@ function move(gameState) {
       }
     });
 
-    if (nearestFood.x > myHead.x && sortedBySurvival.right == snakeMaxLenght) {
+    if (nearestFood.x > myHead.x && sortedBySurvival.right.maxDepth == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood right`);
       console.log(`----------------`);
       return { move: "right" };
     }
-    if (  myHead.x > nearestFood.x && sortedBySurvival.left == snakeMaxLenght) {
+    if (  myHead.x > nearestFood.x && sortedBySurvival.left.maxDepth == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood left`);
       console.log(`----------------`);
       return { move: "left" };
     }
-    if (nearestFood.y > myHead.y && sortedBySurvival.up == snakeMaxLenght) {
+    if (nearestFood.y > myHead.y && sortedBySurvival.up.maxDepth == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood up`);
       console.log(`----------------`);
       return { move: "up" };
     }
-    if (  myHead.y > nearestFood.y && sortedBySurvival.down == snakeMaxLenght) {
+    if (  myHead.y > nearestFood.y && sortedBySurvival.down.maxDepth == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood down`);
       console.log(`----------------`);
       return { move: "down" };
