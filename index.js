@@ -27,9 +27,6 @@ function info() {
   };
 }
 
-// TRASH TALK
-const TRASH = ["Never gonna give you up","Never gonna let you down", "Never gonna run around and desert you", 
-"Never gonna make you cry", "Never gonna say goodbye",  "Never gonna tell a lie and hurt you"];
 
 // start is called when your Battlesnake begins a game
 function start(gameState) {
@@ -67,8 +64,7 @@ function move(gameState) {
   const myHead = gameState.you.body[0];
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
-  const trash_sentance = Math.floor(gameState.turn /10)%6;
-  console.log(TRASH[trash_sentance]);
+
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   if (gameState.game.ruleset.name == 'wrapped') {
@@ -197,7 +193,7 @@ function move(gameState) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
     console.log(`MOVE ${gameState.turn}: ${safestMove}`);
     console.log(`----------------`);
-    return { move: safestMove, shout: TRASH[trash_sentance] };
+    return { move: safestMove};
   }
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
@@ -220,29 +216,29 @@ function move(gameState) {
     if (nearestFood.x > myHead.x && isMoveSafe.right) {
       console.log(`MOVE ${gameState.turn}: nearestFood right`);
       console.log(`----------------`);
-      return { move: "right" , shout: TRASH[trash_sentance] };
+      return { move: "right" };
     }
     if (  myHead.x > nearestFood.x && isMoveSafe.left) {
       console.log(`MOVE ${gameState.turn}: nearestFood left`);
       console.log(`----------------`);
-      return { move: "left" , shout: TRASH[trash_sentance] };
+      return { move: "left" };
     }
     if (nearestFood.y > myHead.y && isMoveSafe.up) {
       console.log(`MOVE ${gameState.turn}: nearestFood up`);
       console.log(`----------------`);
-      return { move: "up" , shout: TRASH[trash_sentance] };
+      return { move: "up" };
     }
     if (  myHead.y > nearestFood.y && isMoveSafe.down) {
       console.log(`MOVE ${gameState.turn}: nearestFood down`);
       console.log(`----------------`);
-      return { move: "down" , shout: TRASH[trash_sentance] };
+      return { move: "down" };
     }
   }
 
   // Choose a random move from the safe moves
   console.log(`MOVE ${gameState.turn}: ${safestMove} - Fallback`);
   console.log(`----------------`);
-  return { move: safestMove , shout: TRASH[trash_sentance] };
+  return { move: safestMove };
 }
 
 
