@@ -210,7 +210,7 @@ function move(gameState) {
   console.log(stateMatrix);
   var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
   var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
-  var snakeMaxLenght =  Object.entries(sortedBySurvival)[3].maxDepth;
+  var snakeMaxLenght =  Object.values(sortedBySurvival)[3];
   console.log("sortedBySurvival:");
   console.log(sortedBySurvival);
   console.log("snakeMaxLenght:");
