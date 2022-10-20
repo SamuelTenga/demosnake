@@ -78,27 +78,27 @@ function move(gameState) {
   const myHead = gameState.you.head;
 
 
-  // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  if (gameState.game.ruleset.name == 'wrapped') {
-    console.log("Don't remove borders, this is a wrapped game");
-    console.log(wrapped);
-  } else {
-    if (myHead.y == 0) {       
-      isMoveSafe.down = false;
-      console.log(`remove down - border`);
-    } else if (myHead.y == boardHeight-1) { 
-      isMoveSafe.up = false;
-      console.log(`remove up - border`);
-    } 
+  // // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
+  // if (gameState.game.ruleset.name == 'wrapped') {
+  //   console.log("Don't remove borders, this is a wrapped game");
+  //   console.log(wrapped);
+  // } else {
+  //   if (myHead.y == 0) {       
+  //     isMoveSafe.down = false;
+  //     console.log(`remove down - border`);
+  //   } else if (myHead.y == boardHeight-1) { 
+  //     isMoveSafe.up = false;
+  //     console.log(`remove up - border`);
+  //   } 
 
-    if (myHead.x == boardWidth-1) { 
-      isMoveSafe.right = false;
-      console.log(`remove right - border`);
-    } else if (myHead.x == 0) { 
-      isMoveSafe.left = false;
-      console.log(`remove left - border`);
-    }
-  }
+  //   if (myHead.x == boardWidth-1) { 
+  //     isMoveSafe.right = false;
+  //     console.log(`remove right - border`);
+  //   } else if (myHead.x == 0) { 
+  //     isMoveSafe.left = false;
+  //     console.log(`remove left - border`);
+  //   }
+  // }
  
 
   // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
@@ -111,69 +111,69 @@ function move(gameState) {
   allBodies.push((gameState.board.hazards))
   var snakebodies =allBodies.flat(1);
 
-  let nextMoveUp = {
-    x: myHead.x,
-    y: myHead.y+1
-  };
-  let nextMoveDown= {
-    x: myHead.x,
-    y: myHead.y-1
-  };
-  let nextMoveLeft= {
-    x: myHead.x-1,
-    y: myHead.y
-  };
-  let nextMoveRight= {
-    x: myHead.x+1,
-    y: myHead.y
-  };
+  // let nextMoveUp = {
+  //   x: myHead.x,
+  //   y: myHead.y+1
+  // };
+  // let nextMoveDown= {
+  //   x: myHead.x,
+  //   y: myHead.y-1
+  // };
+  // let nextMoveLeft= {
+  //   x: myHead.x-1,
+  //   y: myHead.y
+  // };
+  // let nextMoveRight= {
+  //   x: myHead.x+1,
+  //   y: myHead.y
+  // };
 
 
-  let isUpUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
-      return true;
-    }
-    return false;
-  });
-  let isDownUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
-      return true;
-    }
-    return false;
-  });
+  // let isUpUnsafe = snakebodies.filter(element => {
+  //   if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
+  //     return true;
+  //   }
+  //   return false;
+  // });
+  // let isDownUnsafe = snakebodies.filter(element => {
+  //   if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
+  //     return true;
+  //   }
+  //   return false;
+  // });
     
-  let isLeftUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
-      return true;
-    }
-    return false;
-  });
-  let isRigihtUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
-      return true;
-    }
-    return false;
-  });
+  // let isLeftUnsafe = snakebodies.filter(element => {
+  //   if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
+  //     return true;
+  //   }
+  //   return false;
+  // });
+  // let isRigihtUnsafe = snakebodies.filter(element => {
+  //   if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
+  //     return true;
+  //   }
+  //   return false;
+  // });
 
-  if(isUpUnsafe.length == 1){
-    isMoveSafe.up = false;
-    console.log(`remove up - suicide`);
-  }
+  // if(isUpUnsafe.length == 1){
+  //   isMoveSafe.up = false;
+  //   console.log(`remove up - suicide`);
+  // }
 
-  if(isDownUnsafe.length == 1){
-    isMoveSafe.down = false;
-    console.log(`remove down - suicide`);
-  }
+  // if(isDownUnsafe.length == 1){
+  //   isMoveSafe.down = false;
+  //   console.log(`remove down - suicide`);
+  // }
 
-  if(isLeftUnsafe.length == 1){
-    isMoveSafe.left = false;
-    console.log(`remove left - suicide`);
-  }
+  // if(isLeftUnsafe.length == 1){
+  //   isMoveSafe.left = false;
+  //   console.log(`remove left - suicide`);
+  // }
 
-  if(isRigihtUnsafe.length == 1){
-    isMoveSafe.right = false;
-    console.log(`remove right - suicide`);
-  }
+  // if(isRigihtUnsafe.length == 1){
+  //   isMoveSafe.right = false;
+  //   console.log(`remove right - suicide`);
+  // }
   //FLOODFILL ? LETS TRY
   var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
@@ -187,36 +187,38 @@ function move(gameState) {
   console.log(stateMatrix);
   let myLength = gameState.you.length;
 
-  if(myLength > stateMatrix.right.maxDepth) {
-    isMoveSafe.right = false;
-    console.log(`remove right - i am too fat`);
-  } 
-  if(myLength > stateMatrix.left.maxDepth) {
-    isMoveSafe.left = false;
-    console.log(`remove left - i am too fat`);
-  }
-  if(myLength > stateMatrix.up.maxDepth) {
-    isMoveSafe.up = false;
-    console.log(`remove up - i am too fat`);
-  } 
-  if(myLength > stateMatrix.down.maxDepth) {
-    isMoveSafe.down = false;
-    console.log(`remove down - i am too fat`);
-  }
+  // if(myLength > stateMatrix.right.maxDepth) {
+  //   isMoveSafe.right = false;
+  //   console.log(`remove right - i am too fat`);
+  // } 
+  // if(myLength > stateMatrix.left.maxDepth) {
+  //   isMoveSafe.left = false;
+  //   console.log(`remove left - i am too fat`);
+  // }
+  // if(myLength > stateMatrix.up.maxDepth) {
+  //   isMoveSafe.up = false;
+  //   console.log(`remove up - i am too fat`);
+  // } 
+  // if(myLength > stateMatrix.down.maxDepth) {
+  //   isMoveSafe.down = false;
+  //   console.log(`remove down - i am too fat`);
+  // }
 
-  // Are there any safe moves left?
-  const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
-  console.log(safeMoves);
+  // // Are there any safe moves left?
+  // const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
+  // console.log(safeMoves);
   console.log(stateMatrix);
-  const sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
+  var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
   var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
+  console.log(sortedBySurvival);
+  var snakeMaxLenght = sortedBySurvival[length-1];
 
-  if (safeMoves.length == 0) {
-    console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
-    console.log(`MOVE ${gameState.turn}: ${safestMove}`);
-    console.log(`----------------`);
-    return { move: safestMove};
-  }
+  // if (safeMoves.length == 0) {
+  //   console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
+  //   console.log(`MOVE ${gameState.turn}: ${safestMove}`);
+  //   console.log(`----------------`);
+  //   return { move: safestMove};
+  // }
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   var food = gameState.board.food;
@@ -243,22 +245,22 @@ function move(gameState) {
       }
     });
 
-    if (nearestFood.x > myHead.x && isMoveSafe.right) {
+    if (nearestFood.x > myHead.x && sortedBySurvival.right == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood right`);
       console.log(`----------------`);
       return { move: "right" };
     }
-    if (  myHead.x > nearestFood.x && isMoveSafe.left) {
+    if (  myHead.x > nearestFood.x && sortedBySurvival.left == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood left`);
       console.log(`----------------`);
       return { move: "left" };
     }
-    if (nearestFood.y > myHead.y && isMoveSafe.up) {
+    if (nearestFood.y > myHead.y && sortedBySurvival.up == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood up`);
       console.log(`----------------`);
       return { move: "up" };
     }
-    if (  myHead.y > nearestFood.y && isMoveSafe.down) {
+    if (  myHead.y > nearestFood.y && sortedBySurvival.down == snakeMaxLenght) {
       console.log(`MOVE ${gameState.turn}: nearestFood down`);
       console.log(`----------------`);
       return { move: "down" };
