@@ -29,11 +29,9 @@ function info() {
 
 
 class State {
-  constructor() {
-    this.maxDepth = 0;
-    this.nearestFood = 999;
-  }
-}
+  maxDepth = 0;
+  nearestFood = 999;
+  };
 
 // start is called when your Battlesnake begins a game
 function start(gameState) {
