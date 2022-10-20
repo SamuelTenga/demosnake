@@ -231,11 +231,6 @@ function move(gameState) {
     food.forEach(thisFood => {
       var foodDistance;
       if(wrapped){
-        console.log("wrapped distance:")
-        console.log(Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y));
-        console.log(((Math.abs(myHead.x - thisFood.x+1)+1)%boardHeight) + ((Math.abs(myHead.y - thisFood.y)+1)%boardHeight));
-        foodDistance = ((Math.abs(myHead.x - thisFood.x+1)+1)%boardHeight) + ((Math.abs(myHead.y - thisFood.y)+1)%boardHeight);
-      } else {
         foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
       }
       
