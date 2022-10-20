@@ -269,10 +269,10 @@ function floodBoard(boardHeight, boardWidth, snakebodies, myHead) {
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   
-  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, new State());
-  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1, new State());
-  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x, new State());
-  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, new State());
+  fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right);
+  fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left);
+  fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up);
+  fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down);
   console.log(stateMatrix);
 
 }
