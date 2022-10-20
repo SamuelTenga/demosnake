@@ -175,7 +175,16 @@ function move(gameState) {
     console.log(`remove right - suicide`);
   }
   //FLOODFILL ? LETS TRY
-  floodBoard(boardHeight, boardWidth, snakebodies, myHead);
+  var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  
+  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right);
+  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left);
+  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up);
+  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down);
+  console.log(stateMatrix);
   let myLength = gameState.you.length;
 
   if(myLength > stateMatrix.right.maxDepth) {
@@ -264,20 +273,7 @@ function move(gameState) {
 
 
 
-function floodBoard(boardHeight, boardWidth, snakebodies, myHead) {
 
-  var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  
-  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right);
-  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left);
-  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up);
-  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down);
-  console.log(stateMatrix);
-
-}
 
 var fillStack = [];
 // Flood fill algorithm implemented recursively
