@@ -206,12 +206,15 @@ function move(gameState) {
 
   // // Are there any safe moves left?
   // const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
-  // console.log(safeMoves);
+  console.log("stateMatrix:");
   console.log(stateMatrix);
   var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
   var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
-  console.log(sortedBySurvival);
   var snakeMaxLenght =  Object.entries(sortedBySurvival)[3];
+  console.log("sortedBySurvival:");
+  console.log(sortedBySurvival);
+  console.log("snakeMaxLenght:");
+  console.log(snakeMaxLenght);
 
   // if (safeMoves.length == 0) {
   //   console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
