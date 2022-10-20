@@ -54,16 +54,18 @@ let wrapped=false;
 let boardWidth = 0;
 let boardHeight = 0;
 
-let stateMatrix = {
-  up: new State(),
-  down:new State(),
-  left: new State(),
-  right: new State()
-};
+
 // move is called on every turn and returns your next move
 // Valid moves are "up", "down", "left", or "right"
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
+
+  let stateMatrix = {
+    up: new State(),
+    down:new State(),
+    left: new State(),
+    right: new State()
+  };
 
   let isMoveSafe = {
     up: true,
