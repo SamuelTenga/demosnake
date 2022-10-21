@@ -59,10 +59,10 @@ function end(gameState) {
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
   const food = gameState.board.food;
-  const wrapped=(gameState.game.ruleset.name == 'wrapped');
+  const wrapped= !!(gameState.game.ruleset.name == 'wrapped');
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
-  const hungry = (gameState.you.health < (boardWidth+boardHeight)*2);
+  const hungry = !!(gameState.you.health < (boardWidth+boardHeight)*2);
   console.log("wrapped");
   console.log(wrapped);
   console.log("hungry");
