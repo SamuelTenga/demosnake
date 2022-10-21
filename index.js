@@ -167,7 +167,7 @@ function fillMatrix(matrix, y, x, state)
   
   matrix[y][x] = 1;
   state.maxDepth++;
-  if(state.nearestFood > state.maxDepth && state.find(element => element.x == x && element.y == y)){
+  if(state.nearestFood > state.maxDepth && state.food.find(element => element.x == x && element.y == y)){
     state.nearestFood = state.maxDepth;
   }
 
