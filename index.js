@@ -105,8 +105,7 @@ function move(gameState) {
   console.log("sortedBySurviva:l");
   console.log(sortedBySurvival);
   var doubleSort = Object.fromEntries(Object.entries(stateMatrix).sort(
-    ([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)
-                || (a.nearestFood > b.nearestFood) ? 1 : ((b.nearestFood > a.nearestFood) ? -1 : 0)
+    ([,a],[,b]) => (a.maxDepth > b.maxDepth) || (b.nearestFood > a.nearestFood)
     ));
 
   console.log("doubleSort:");
