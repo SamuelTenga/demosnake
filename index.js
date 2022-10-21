@@ -69,8 +69,8 @@ function move(gameState) {
   console.log(hungry);
   let stateMatrix = {
     up: new State(food),
-    left: new State(food),
     down:new State(food),
+    left: new State(food),
     right: new State(food)
   };
 
@@ -86,17 +86,17 @@ function move(gameState) {
 
 
   //FLOODFILL 
-  var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
 
   
   
-  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right, wrapped);
-  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left, wrapped);
   stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up, wrapped);
   stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down, wrapped);
+  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right, wrapped);
+  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left, wrapped);
   console.log("stateMatrix:");
   console.log(stateMatrix);
   let myLength = gameState.you.length;
@@ -158,8 +158,8 @@ function fillMatrix(matrix, y, x, state, wrapped)
     state.nearestFood = state.maxDepth;
   }
 
-  state = fillMatrix(matrix, y + 1, x, state, wrapped);
-  state = fillMatrix(matrix, y - 1, x, state, wrapped);
+  state = fillMatrix(matrix, y + 1 , x, state, wrapped);
+  state = fillMatrix(matrix, y - 1 , x, state, wrapped);
   state = fillMatrix(matrix, y, x + 1 , state, wrapped);
   state = fillMatrix(matrix, y, x -1 , state, wrapped);
   return state;
