@@ -62,7 +62,7 @@ function move(gameState) {
   const wrapped= !!(gameState.game.ruleset.name == 'wrapped');
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
-  const hungry = !!(gameState.you.health <= 50 && gameState.you.length <= boardHeight);
+  const hungry = !!(gameState.you.health <= 50 || gameState.you.length <= boardHeight);
   console.log("wrapped");
   console.log(wrapped);
   console.log("hungry");
