@@ -137,13 +137,13 @@ function move(gameState) {
 function fillMatrix(matrix, y, x, state, wrapped)
 {
   //should now work with wrapped games
-  if(wrapped == true){
+  if(wrapped){
     y = y % matrix.length;
     x = x % matrix[0].length;
   } else if (!validCoordinates(matrix, y, x)){
       return state;
   }
-  console.log(wrapped, y, x);
+  console.log(wrapped, y, x, y % matrix.length, x % matrix[0].length);
       
   if (matrix[y][x] == 1)
       return state;
