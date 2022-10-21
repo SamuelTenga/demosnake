@@ -157,7 +157,7 @@ function fillMatrix(matrix, y, x, state)
 {
   //should now work with wrapped games
   y = y % matrix.length;
-  x = x % matrix[row].length;
+  x = x % matrix[y].length;
 
   if (!validCoordinates(matrix, y, x))
       return state;
@@ -180,9 +180,9 @@ function fillMatrix(matrix, y, x, state)
 
 
 // Returns true if specified row and col coordinates are in the matrix  -- DELETE ? Since I moduloed everything
-function validCoordinates(matrix, row, col)
+function validCoordinates(matrix, y, x)
 {
-  return (row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length);
+  return (y >= 0 && y < matrix.length && x >= 0 && x < matrix[y].length);
 }
 
 // Returns a matrix of specified number of rows and cols
