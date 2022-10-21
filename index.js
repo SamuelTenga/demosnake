@@ -99,13 +99,7 @@ function move(gameState) {
 
   // // Are there any safe moves left?
 
-  var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
-  var safestMove = Object.keys(sortedBySurvival)[3];
-  var snakeMaxLenght =  Object.values(sortedBySurvival)[3].maxDepth;
-  console.log("sortedBySurviva:l");
-  var a = new State();
-  console.log(sortedBySurvival);
-  var doubleSort = Object.fromEntries(Object.entries(stateMatrix).sort(
+  var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
     ([,a],[,b]) => {
     if (a.maxDepth === b.maxDepth){
       return a.nearestFood < b.nearestFood ? 1 : -1
@@ -113,53 +107,12 @@ function move(gameState) {
       return a.maxDepth < b.maxDepth ? -1 : 1
     }
   }));
-
-  console.log("doubleSort:");
-  console.log(doubleSort);
-  // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-  
-  if(food.length> 0 ){
-    var nearestFood;
-    var distanceToNearestFood=99;
-    food.forEach(thisFood => {
-      var foodDistance;
-      if(wrapped){
-        foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
-      }
-      
-      if( distanceToNearestFood > foodDistance){
-        nearestFood = thisFood;
-        distanceToNearestFood=foodDistance;
-        console.log("new food");
-        console.log(nearestFood);
-        console.log(distanceToNearestFood);
-      }
-    });
-
-    if (nearestFood.x > myHead.x && sortedBySurvival.right.maxDepth == snakeMaxLenght) {
-      console.log(`MOVE ${gameState.turn}: nearestFood right`);
-      console.log(`----------------`);
-      return { move: "right" };
-    }
-    if (  myHead.x > nearestFood.x && sortedBySurvival.left.maxDepth == snakeMaxLenght) {
-      console.log(`MOVE ${gameState.turn}: nearestFood left`);
-      console.log(`----------------`);
-      return { move: "left" };
-    }
-    if (nearestFood.y > myHead.y && sortedBySurvival.up.maxDepth == snakeMaxLenght) {
-      console.log(`MOVE ${gameState.turn}: nearestFood up`);
-      console.log(`----------------`);
-      return { move: "up" };
-    }
-    if (  myHead.y > nearestFood.y && sortedBySurvival.down.maxDepth == snakeMaxLenght) {
-      console.log(`MOVE ${gameState.turn}: nearestFood down`);
-      console.log(`----------------`);
-      return { move: "down" };
-    }
-  }
+  var safestMove = Object.keys(sortedBySurvival)[3];
+  console.log("sortedBySurviva:");
+  console.log(sortedBySurvival);
 
   // Choose a random move from the safe moves
-  console.log(`MOVE ${gameState.turn}: ${safestMove} - Fallback`);
+  console.log(`MOVE ${gameState.turn}: ${safestMove}`);
   console.log(`----------------`);
   return { move: safestMove };
 }
