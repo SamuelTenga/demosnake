@@ -155,6 +155,8 @@ function move(gameState) {
 // Flood fill algorithm implemented recursively
 function fillMatrix(matrix, y, x, state)
 {
+  console.log(matrix);
+  console.log(matrix[y]);
   //should now work with wrapped games
   y = y % matrix.length;
   x = x % matrix[y].length;
