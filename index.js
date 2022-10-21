@@ -117,7 +117,7 @@ function move(gameState) {
         return a.nearestFood < b.nearestFood ? 1 : -1
       } else {
         //avoid food if not hungry
-        return a.maxDepth < b.maxDepth ? -1 : 1
+        return a.maxDepth < b.maxDepth ? 1 : -1
       }
     }));
   }
