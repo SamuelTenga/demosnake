@@ -31,17 +31,18 @@ function info() {
 class State {
   maxDepth = 0;
   nearestFood = 999;
+  food = [];
+
+  constructor(food) {
+    this.food = food;
+  }
+  
   };
 
 // start is called when your Battlesnake begins a game
 function start(gameState) {
   console.log("GAME START");
-  if (gameState.game.ruleset.name == 'wrapped') {
     console.log("Don't remove borders, this is a wrapped game");
-    wrapped = true;
-  }
-  boardHeight = gameState.board.height;
-  boardWidth = gameState.board.width;
 }
 
 // end is called when your Battlesnake finishes a game
@@ -50,58 +51,26 @@ function end(gameState) {
   console.log(JSON.stringify(gameState));
 }
 
-let wrapped=false;
-let boardWidth = 0;
-let boardHeight = 0;
+
 
 
 // move is called on every turn and returns your next move
 // Valid moves are "up", "down", "left", or "right"
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
+  const food = gameState.board.food;
+  const wrapped=(gameState.game.ruleset.name == 'wrapped');
+  const boardWidth = gameState.board.width;
+  const boardHeight = gameState.board.height;
 
   let stateMatrix = {
-    up: new State(),
-    down:new State(),
-    left: new State(),
-    right: new State()
+    up: new State(food),
+    down:new State(food),
+    left: new State(food),
+    right: new State(food)
   };
 
-  let isMoveSafe = {
-    up: true,
-    down: true,
-    left: true,
-    right: true
-  };
-
-  // We've included code to prevent your Battlesnake from moving backwards
   const myHead = gameState.you.head;
-
-
-  // // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  // if (gameState.game.ruleset.name == 'wrapped') {
-  //   console.log("Don't remove borders, this is a wrapped game");
-  //   console.log(wrapped);
-  // } else {
-  //   if (myHead.y == 0) {       
-  //     isMoveSafe.down = false;
-  //     console.log(`remove down - border`);
-  //   } else if (myHead.y == boardHeight-1) { 
-  //     isMoveSafe.up = false;
-  //     console.log(`remove up - border`);
-  //   } 
-
-  //   if (myHead.x == boardWidth-1) { 
-  //     isMoveSafe.right = false;
-  //     console.log(`remove right - border`);
-  //   } else if (myHead.x == 0) { 
-  //     isMoveSafe.left = false;
-  //     console.log(`remove left - border`);
-  //   }
-  // }
- 
-
-  // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
   var allBodies =[]; 
   var opponents = (gameState.board.snakes);
 
@@ -111,120 +80,31 @@ function move(gameState) {
   allBodies.push((gameState.board.hazards))
   var snakebodies =allBodies.flat(1);
 
-  // let nextMoveUp = {
-  //   x: myHead.x,
-  //   y: myHead.y+1
-  // };
-  // let nextMoveDown= {
-  //   x: myHead.x,
-  //   y: myHead.y-1
-  // };
-  // let nextMoveLeft= {
-  //   x: myHead.x-1,
-  //   y: myHead.y
-  // };
-  // let nextMoveRight= {
-  //   x: myHead.x+1,
-  //   y: myHead.y
-  // };
 
-
-  // let isUpUnsafe = snakebodies.filter(element => {
-  //   if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
-  //     return true;
-  //   }
-  //   return false;
-  // });
-  // let isDownUnsafe = snakebodies.filter(element => {
-  //   if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
-  //     return true;
-  //   }
-  //   return false;
-  // });
-    
-  // let isLeftUnsafe = snakebodies.filter(element => {
-  //   if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
-  //     return true;
-  //   }
-  //   return false;
-  // });
-  // let isRigihtUnsafe = snakebodies.filter(element => {
-  //   if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
-  //     return true;
-  //   }
-  //   return false;
-  // });
-
-  // if(isUpUnsafe.length == 1){
-  //   isMoveSafe.up = false;
-  //   console.log(`remove up - suicide`);
-  // }
-
-  // if(isDownUnsafe.length == 1){
-  //   isMoveSafe.down = false;
-  //   console.log(`remove down - suicide`);
-  // }
-
-  // if(isLeftUnsafe.length == 1){
-  //   isMoveSafe.left = false;
-  //   console.log(`remove left - suicide`);
-  // }
-
-  // if(isRigihtUnsafe.length == 1){
-  //   isMoveSafe.right = false;
-  //   console.log(`remove right - suicide`);
-  // }
-  //FLOODFILL ? LETS TRY
+  //FLOODFILL 
   var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+
+  
   
   stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right);
   stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left);
   stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up);
   stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down);
+  console.log("stateMatrix:");
   console.log(stateMatrix);
   let myLength = gameState.you.length;
 
-  // if(myLength > stateMatrix.right.maxDepth) {
-  //   isMoveSafe.right = false;
-  //   console.log(`remove right - i am too fat`);
-  // } 
-  // if(myLength > stateMatrix.left.maxDepth) {
-  //   isMoveSafe.left = false;
-  //   console.log(`remove left - i am too fat`);
-  // }
-  // if(myLength > stateMatrix.up.maxDepth) {
-  //   isMoveSafe.up = false;
-  //   console.log(`remove up - i am too fat`);
-  // } 
-  // if(myLength > stateMatrix.down.maxDepth) {
-  //   isMoveSafe.down = false;
-  //   console.log(`remove down - i am too fat`);
-  // }
-
   // // Are there any safe moves left?
-  // const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
-  console.log("stateMatrix:");
-  console.log(stateMatrix);
+
   var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
   var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
   var snakeMaxLenght =  Object.values(sortedBySurvival)[3].maxDepth;
-  console.log("sortedBySurvival:");
-  console.log(sortedBySurvival);
-  console.log("snakeMaxLenght:");
-  console.log(snakeMaxLenght);
-
-  // if (safeMoves.length == 0) {
-  //   console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
-  //   console.log(`MOVE ${gameState.turn}: ${safestMove}`);
-  //   console.log(`----------------`);
-  //   return { move: safestMove};
-  // }
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-  var food = gameState.board.food;
+  
   if(food.length> 0 ){
     var nearestFood;
     var distanceToNearestFood=99;
@@ -272,16 +152,12 @@ function move(gameState) {
 }
 
 
-
-
-
-var fillStack = [];
 // Flood fill algorithm implemented recursively
 function fillMatrix(matrix, y, x, state)
 {
-  //should now work with wrapped games ? maybe
-  y = y%boardHeight;
-  x = x%boardWidth;
+  //should now work with wrapped games
+  y = y % boardHeight;
+  x = x % boardWidth;
 
   if (!validCoordinates(matrix, y, x))
       return state;
@@ -291,6 +167,9 @@ function fillMatrix(matrix, y, x, state)
   
   matrix[y][x] = 1;
   state.maxDepth++;
+  if(state.nearestFood > state.maxDepth && state.find(element => element.x == x && element.y == y)){
+    state.nearestFood = state.maxDepth;
+  }
 
   state = fillMatrix(matrix, y + 1, x, state);
   state = fillMatrix(matrix, y - 1, x, state);
@@ -300,7 +179,7 @@ function fillMatrix(matrix, y, x, state)
 }
 
 
-// Returns true if specified row and col coordinates are in the matrix
+// Returns true if specified row and col coordinates are in the matrix  -- DELETE ? Since I moduloed everything
 function validCoordinates(matrix, row, col)
 {
   return (row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length);
