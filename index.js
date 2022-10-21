@@ -62,7 +62,7 @@ function move(gameState) {
   const wrapped= !!(gameState.game.ruleset.name == 'wrapped');
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
-  const hungry = !!(gameState.you.health < (boardWidth+boardHeight)*2);
+  const hungry = !!(gameState.you.health <= 50);
   console.log("wrapped");
   console.log(wrapped);
   console.log("hungry");
@@ -137,11 +137,10 @@ function move(gameState) {
 function fillMatrix(matrix, y, x, state, wrapped)
 {
   //should now work with wrapped games
-  if(wrapped){
+  if(wrapped == true){
     y = y % matrix.length;
     x = x % matrix[0].length;
-  } else {
-    if (!validCoordinates(matrix, y, x))
+  } else if (!validCoordinates(matrix, y, x)){
       return state;
   }
       
