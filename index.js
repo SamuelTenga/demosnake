@@ -108,7 +108,7 @@ function move(gameState) {
   var doubleSort = Object.fromEntries(Object.entries(stateMatrix).sort(
     ([,a],[,b]) => {
     if (a.maxDepth === b.maxDepth){
-      return a.nearestFood < b.nearestFood ? -1 : 1
+      return a.nearestFood < b.nearestFood ? 1 : -1
     } else {
       return a.maxDepth < b.maxDepth ? -1 : 1
     }
