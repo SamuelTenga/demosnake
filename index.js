@@ -5,7 +5,7 @@
 //  |    |   \ / __ \|  |  |  | |  |_\  ___/ \___ \|   |  \/ __ \|    <\  ___/
 //  |________/(______/__|  |__| |____/\_____>______>___|__(______/__|__\\_____>
 //
-// This file can be a nice home for your Battlesnake logic and helper functions.
+// This file can be a nice home for your Battlesnake logic and per functions.
 //
 // To get you started we've included code to prevent your Battlesnake from moving backwards.
 // For more info see docs.battlesnake.com
@@ -62,6 +62,7 @@ function move(gameState) {
   const wrapped=(gameState.game.ruleset.name == 'wrapped');
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
+  const hungry = (40 < gameState.you.health);
 
   let stateMatrix = {
     up: new State(food),
@@ -97,8 +98,7 @@ function move(gameState) {
   console.log(stateMatrix);
   let myLength = gameState.you.length;
 
-  // // Are there any safe moves left?
-
+  if(hungry){
   var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
     ([,a],[,b]) => {
     if (a.maxDepth === b.maxDepth){
@@ -107,9 +107,22 @@ function move(gameState) {
       return a.maxDepth < b.maxDepth ? -1 : 1
     }
   }));
+  } else {
+    var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
+      ([,a],[,b]) => {
+      if (a.maxDepth === b.maxDepth){
+        return a.nearestFood < b.nearestFood ? 1 : -1
+      } else {
+        //avoid food if not hungry
+        return a.maxDepth < b.maxDepth ? 1 : -1
+      }
+    }));
+  }
   var safestMove = Object.keys(sortedBySurvival)[3];
   console.log("sortedBySurviva:");
   console.log(sortedBySurvival);
+  console.log("hungry:");
+  console.log(hungry);
 
   // Choose a random move from the safe moves
   console.log(`MOVE ${gameState.turn}: ${safestMove}`);
@@ -118,7 +131,6 @@ function move(gameState) {
 }
 
 
-// Flood fill algorithm implemented recursively
 function fillMatrix(matrix, y, x, state, wrapped)
 {
   //should now work with wrapped games
@@ -135,6 +147,7 @@ function fillMatrix(matrix, y, x, state, wrapped)
   
   matrix[y][x] = 1;
   state.maxDepth++;
+  //find nearest food
   if(state.nearestFood > state.maxDepth && state.food.find(element => element.x == x && element.y == y)){
     state.nearestFood = state.maxDepth;
   }
