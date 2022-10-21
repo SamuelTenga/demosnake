@@ -143,7 +143,7 @@ function fillMatrix(matrix, y, x, state, wrapped)
   } else if (!validCoordinates(matrix, y, x)){
       return state;
   }
-  console.log(wrapped, y, x, y % matrix.length, x % matrix[0].length);
+  console.log(wrapped, y, x, y % matrix.length, x % matrix[0].length, matrix.length, x % matrix[0].length);
       
   if (matrix[y][x] == 1)
       return state;
