@@ -156,8 +156,8 @@ function move(gameState) {
 function fillMatrix(matrix, y, x, state)
 {
   //should now work with wrapped games
-  y = y % boardHeight;
-  x = x % boardWidth;
+  y = y % matrix.length;
+  x = x % matrix[row].length;
 
   if (!validCoordinates(matrix, y, x))
       return state;
