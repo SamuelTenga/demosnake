@@ -103,10 +103,16 @@ function move(gameState) {
   var safestMove = Object.keys(sortedBySurvival)[3];
   var snakeMaxLenght =  Object.values(sortedBySurvival)[3].maxDepth;
   console.log("sortedBySurviva:l");
+  var a = new State();
   console.log(sortedBySurvival);
   var doubleSort = Object.fromEntries(Object.entries(stateMatrix).sort(
-    ([,a],[,b]) => (a.maxDepth > b.maxDepth) || (b.nearestFood > a.nearestFood)
-    ));
+    ([,a],[,b]) => {
+    if (a.maxDepth === b.maxDepth){
+      return a.nearestFood < b.nearestFood ? -1 : 1
+    } else {
+      return a.maxDepth < b.maxDepth ? -1 : 1
+    }
+  }));
 
   console.log("doubleSort:");
   console.log(doubleSort);
