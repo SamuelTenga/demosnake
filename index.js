@@ -138,12 +138,15 @@ function fillMatrix(matrix, y, x, state, wrapped)
 {
   //should now work with wrapped games
   if(wrapped){
+    console.log("before wrapped,  y, x", wrapped, y, x);
     y = y % matrix.length;
     x = x % matrix[0].length;
+    console.log("after wrapped, y, x", wrapped, y, x);
   } else if (!validCoordinates(matrix, y, x)){
+      console.log("else", wrapped, y, x);
       return state;
   }
-  console.log(wrapped, y, x, y % matrix.length, x % matrix[0].length, matrix.length, x % matrix[0].length);
+  console.log("out of if wrapped, y, x", wrapped, y, x);
       
   if (matrix[y][x] == 1)
       return state;
