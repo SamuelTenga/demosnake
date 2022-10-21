@@ -100,9 +100,17 @@ function move(gameState) {
   // // Are there any safe moves left?
 
   var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)));
-  var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
+  var safestMove = Object.keys(sortedBySurvival)[3];
   var snakeMaxLenght =  Object.values(sortedBySurvival)[3].maxDepth;
+  console.log("sortedBySurviva:l");
+  console.log(sortedBySurvival);
+  var doubleSort = Object.fromEntries(Object.entries(stateMatrix).sort(
+    ([,a],[,b]) => (a.maxDepth > b.maxDepth) ? 1 : ((b.maxDepth > a.maxDepth) ? -1 : 0)
+                || (a.nearestFood > b.nearestFood) ? 1 : ((b.nearestFood > a.nearestFood) ? -1 : 0)
+    ));
 
+  console.log("doubleSort:");
+  console.log(doubleSort);
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   
   if(food.length> 0 ){
