@@ -63,7 +63,10 @@ function move(gameState) {
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
   const hungry = (gameState.you.health < (boardWidth+boardHeight)*2);
-
+  console.log("wrapped");
+  console.log(wrapped);
+  console.log("hungry");
+  console.log(hungry);
   let stateMatrix = {
     up: new State(food),
     left: new State(food),
