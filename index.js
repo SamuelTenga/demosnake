@@ -65,8 +65,8 @@ function move(gameState) {
 
   let stateMatrix = {
     up: new State(food),
-    down:new State(food),
     left: new State(food),
+    down:new State(food),
     right: new State(food)
   };
 
@@ -89,10 +89,10 @@ function move(gameState) {
 
   
   
-  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right);
-  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left);
-  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up);
-  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down);
+  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right, wrapped);
+  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left, wrapped);
+  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up, wrapped);
+  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down, wrapped);
   console.log("stateMatrix:");
   console.log(stateMatrix);
   let myLength = gameState.you.length;
@@ -119,14 +119,16 @@ function move(gameState) {
 
 
 // Flood fill algorithm implemented recursively
-function fillMatrix(matrix, y, x, state)
+function fillMatrix(matrix, y, x, state, wrapped)
 {
   //should now work with wrapped games
-  y = y % matrix.length;
-  x = x % matrix[0].length;
-
-  if (!validCoordinates(matrix, y, x))
+  if(wrapped){
+    y = y % matrix.length;
+    x = x % matrix[0].length;
+  } else {
+    if (!validCoordinates(matrix, y, x))
       return state;
+  }
       
   if (matrix[y][x] == 1)
       return state;
@@ -137,10 +139,10 @@ function fillMatrix(matrix, y, x, state)
     state.nearestFood = state.maxDepth;
   }
 
-  state = fillMatrix(matrix, y + 1, x, state);
-  state = fillMatrix(matrix, y - 1, x, state);
-  state = fillMatrix(matrix, y, x + 1 , state);
-  state = fillMatrix(matrix, y, x -1 , state);
+  state = fillMatrix(matrix, y + 1, x, state, wrapped);
+  state = fillMatrix(matrix, y - 1, x, state, wrapped);
+  state = fillMatrix(matrix, y, x + 1 , state, wrapped);
+  state = fillMatrix(matrix, y, x -1 , state, wrapped);
   return state;
 }
 
