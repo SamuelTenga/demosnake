@@ -77,7 +77,7 @@ function move(gameState) {
   const myHead = gameState.you.head;
   var allBodies =[]; 
   var opponents = (gameState.board.snakes);
-
+  console.log(opponents);
   opponents.forEach(element => {
     allBodies.push(element.body);
   });
