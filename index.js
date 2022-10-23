@@ -81,7 +81,7 @@ function move(gameState) {
   opponents.forEach(element => {
     allBodies.push(element.body);
   });
-  allBodies.push((gameState.board.hazards))
+  allBodies.push((gameState.board.hazards));
   var snakebodies =allBodies.flat(1);
 
 
