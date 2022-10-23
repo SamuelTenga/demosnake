@@ -5,7 +5,7 @@
 //  |    |   \ / __ \|  |  |  | |  |_\  ___/ \___ \|   |  \/ __ \|    <\  ___/
 //  |________/(______/__|  |__| |____/\_____>______>___|__(______/__|__\\_____>
 //
-// This file can be a nice home for your Battlesnake logic and helper functions.
+// This file can be a nice home for your Battlesnake logic and per functions.
 //
 // To get you started we've included code to prevent your Battlesnake from moving backwards.
 // For more info see docs.battlesnake.com
@@ -28,15 +28,21 @@ function info() {
 }
 
 
+class State {
+  maxDepth = 0;
+  nearestFood = 999;
+  food = [];
+
+  constructor(food) {
+    this.food = food;
+  }
+  
+  };
+
 // start is called when your Battlesnake begins a game
 function start(gameState) {
   console.log("GAME START");
-  if (gameState.game.ruleset.name == 'wrapped') {
     console.log("Don't remove borders, this is a wrapped game");
-    wrapped = true;
-  }
-  boardHeight = gameState.board.height;
-  boardWidth = gameState.board.width;
 }
 
 // end is called when your Battlesnake finishes a game
@@ -45,262 +51,121 @@ function end(gameState) {
   console.log(JSON.stringify(gameState));
 }
 
-let wrapped=false;
-let boardWidth = 0;
-let boardHeight = 0;
 
-let moveSpaceCounter = {
-  up: 0,
-  down: 0,
-  left: 0,
-  right: 0
-};
+
+
 // move is called on every turn and returns your next move
 // Valid moves are "up", "down", "left", or "right"
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
-
-  let isMoveSafe = {
-    up: true,
-    down: true,
-    left: true,
-    right: true
+  const food = gameState.board.food;
+  const wrapped= !!(gameState.game.ruleset.name == 'wrapped');
+  const boardWidth = gameState.board.width;
+  const boardHeight = gameState.board.height;
+  const hungry = !!(gameState.you.health <= 50 || gameState.you.length <= boardHeight);
+  console.log("wrapped");
+  console.log(wrapped);
+  console.log("hungry");
+  console.log(hungry);
+  let stateMatrix = {
+    up: new State(food),
+    down:new State(food),
+    left: new State(food),
+    right: new State(food)
   };
 
-  // We've included code to prevent your Battlesnake from moving backwards
   const myHead = gameState.you.head;
-
-
-  // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  if (gameState.game.ruleset.name == 'wrapped') {
-    console.log("Don't remove borders, this is a wrapped game");
-    console.log(wrapped);
-  } else {
-    if (myHead.y == 0) {       
-      isMoveSafe.down = false;
-      console.log(`remove down - border`);
-    } else if (myHead.y == boardHeight-1) { 
-      isMoveSafe.up = false;
-      console.log(`remove up - border`);
-    } 
-
-    if (myHead.x == boardWidth-1) { 
-      isMoveSafe.right = false;
-      console.log(`remove right - border`);
-    } else if (myHead.x == 0) { 
-      isMoveSafe.left = false;
-      console.log(`remove left - border`);
-    }
-  }
- 
-
-  // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
   var allBodies =[]; 
   var opponents = (gameState.board.snakes);
 
   opponents.forEach(element => {
     allBodies.push(element.body);
   });
-  allBodies.push((gameState.board.hazards))
+  allBodies.push((gameState.board.hazards));
   var snakebodies =allBodies.flat(1);
 
-  let nextMoveUp = {
-    x: myHead.x,
-    y: myHead.y+1
-  };
-  let nextMoveDown= {
-    x: myHead.x,
-    y: myHead.y-1
-  };
-  let nextMoveLeft= {
-    x: myHead.x-1,
-    y: myHead.y
-  };
-  let nextMoveRight= {
-    x: myHead.x+1,
-    y: myHead.y
-  };
 
+  //FLOODFILL 
+  var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
+  var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
 
-  let isUpUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveUp.x && element.y === nextMoveUp.y){
-      return true;
-    }
-    return false;
-  });
-  let isDownUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveDown.x && element.y === nextMoveDown.y){
-      return true;
-    }
-    return false;
-  });
-    
-  let isLeftUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveLeft.x && element.y === nextMoveLeft.y){
-      return true;
-    }
-    return false;
-  });
-  let isRigihtUnsafe = snakebodies.filter(element => {
-    if(element.x === nextMoveRight.x && element.y === nextMoveRight.y){
-      return true;
-    }
-    return false;
-  });
-
-  if(isUpUnsafe.length == 1){
-    isMoveSafe.up = false;
-    console.log(`remove up - suicide`);
-  }
-
-  if(isDownUnsafe.length == 1){
-    isMoveSafe.down = false;
-    console.log(`remove down - suicide`);
-  }
-
-  if(isLeftUnsafe.length == 1){
-    isMoveSafe.left = false;
-    console.log(`remove left - suicide`);
-  }
-
-  if(isRigihtUnsafe.length == 1){
-    isMoveSafe.right = false;
-    console.log(`remove right - suicide`);
-  }
-  //FLOODFILL ? LETS TRY
-  floodBoard(boardHeight, boardWidth, snakebodies, myHead);
+  
+  
+  stateMatrix.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x,stateMatrix.up, wrapped);
+  stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down, wrapped);
+  stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right, wrapped);
+  stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left, wrapped);
+  console.log("stateMatrix:");
+  console.log(stateMatrix);
   let myLength = gameState.you.length;
 
-  if(myLength > moveSpaceCounter.right) {
-    isMoveSafe.right = false;
-    console.log(`remove right - i am too fat`);
-  } 
-  if(myLength > moveSpaceCounter.left) {
-    isMoveSafe.left = false;
-    console.log(`remove left - i am too fat`);
-  }
-  if(myLength > moveSpaceCounter.up) {
-    isMoveSafe.up = false;
-    console.log(`remove up - i am too fat`);
-  } 
-  if(myLength > moveSpaceCounter.down) {
-    isMoveSafe.down = false;
-    console.log(`remove down - i am too fat`);
-  }
-
-  // Are there any safe moves left?
-  const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
-  console.log(safeMoves);
-
-  const sortedBySurvival = Object.fromEntries(Object.entries(moveSpaceCounter).sort(([,a],[,b]) => a-b));
-  var safestMove = Object.keys(sortedBySurvival)[Object.keys(sortedBySurvival).length-1];
-
-  if (safeMoves.length == 0) {
-    console.log(`MOVE ${gameState.turn}: No safe moves detected! Pick slowest death :)`);
-    console.log(`MOVE ${gameState.turn}: ${safestMove}`);
-    console.log(`----------------`);
-    return { move: safestMove};
-  }
-
-  // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-  var food = gameState.board.food;
-  if(food.length> 0 ){
-    var nearestFood;
-    var distanceToNearestFood=99;
-    food.forEach(thisFood => {
-      var foodDistance;
-      if(wrapped){
-        console.log("wrapped distance:")
-        console.log(Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y));
-        console.log(((Math.abs(myHead.x - thisFood.x+1)+1)%boardHeight) + ((Math.abs(myHead.y - thisFood.y)+1)%boardHeight));
-        foodDistance = ((Math.abs(myHead.x - thisFood.x+1)+1)%boardHeight) + ((Math.abs(myHead.y - thisFood.y)+1)%boardHeight);
+  if(hungry){
+  var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
+    ([,a],[,b]) => {
+    if (a.maxDepth === b.maxDepth){
+      return a.nearestFood < b.nearestFood ? 1 : -1
+    } else {
+      return a.maxDepth < b.maxDepth ?  -1 : 1
+    }
+  }));
+  } else {
+    var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
+      ([,a],[,b]) => {
+      if (a.maxDepth === b.maxDepth){
+        return a.nearestFood < b.nearestFood ? -1 : 1
       } else {
-        foodDistance = Math.abs(myHead.x - thisFood.x) + Math.abs(myHead.y - thisFood.y);
+        //avoid food if not hungry
+        return a.maxDepth < b.maxDepth ? -1 : 1
       }
-      
-      if( distanceToNearestFood > foodDistance){
-        nearestFood = thisFood;
-        distanceToNearestFood=foodDistance;
-        console.log("new food");
-        console.log(nearestFood);
-        console.log(distanceToNearestFood);
-      }
-    });
-
-    if (nearestFood.x > myHead.x && isMoveSafe.right) {
-      console.log(`MOVE ${gameState.turn}: nearestFood right`);
-      console.log(`----------------`);
-      return { move: "right" };
-    }
-    if (  myHead.x > nearestFood.x && isMoveSafe.left) {
-      console.log(`MOVE ${gameState.turn}: nearestFood left`);
-      console.log(`----------------`);
-      return { move: "left" };
-    }
-    if (nearestFood.y > myHead.y && isMoveSafe.up) {
-      console.log(`MOVE ${gameState.turn}: nearestFood up`);
-      console.log(`----------------`);
-      return { move: "up" };
-    }
-    if (  myHead.y > nearestFood.y && isMoveSafe.down) {
-      console.log(`MOVE ${gameState.turn}: nearestFood down`);
-      console.log(`----------------`);
-      return { move: "down" };
-    }
+    }));
   }
+  var safestMove = Object.keys(sortedBySurvival)[3];
+  console.log("sortedBySurviva:");
+  console.log(sortedBySurvival);
+  console.log("hungry:");
+  console.log(hungry);
 
   // Choose a random move from the safe moves
-  console.log(`MOVE ${gameState.turn}: ${safestMove} - Fallback`);
+  console.log(`MOVE ${gameState.turn}: ${safestMove}`);
   console.log(`----------------`);
   return { move: safestMove };
 }
 
 
-
-function floodBoard(boardHeight, boardWidth, snakebodies, myHead) {
-
-  var rightMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
-  
-  moveSpaceCounter.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, 0);
-  moveSpaceCounter.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1, 0);
-  moveSpaceCounter.up = fillMatrix(upMatrix, myHead.y + 1, myHead.x, 0);
-  moveSpaceCounter.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, 0);
-  console.log(moveSpaceCounter);
-
-}
-
-var fillStack = [];
-// Flood fill algorithm implemented recursively
-function fillMatrix(matrix, y, x, counter)
+function fillMatrix(matrix, y, x, state, wrapped)
 {
-  //should now work with wrapped games ? maybe
-  y = y%boardHeight;
-  x = x%boardWidth;
-
-  if (!validCoordinates(matrix, y, x))
-      return counter;
+  //should now work with wrapped games
+  if(wrapped){
+    y = ((y%matrix.length) + matrix.length)%matrix.length;
+    x = ((x%matrix[0].length)+matrix[0].length)%matrix[0].length;
+  }else if (!validCoordinates(matrix, y, x)){
+      return state;
+  }
       
   if (matrix[y][x] == 1)
-      return counter;
+      return state;
   
   matrix[y][x] = 1;
-  counter++;
+  state.maxDepth++;
+  //find nearest food
+  if(state.nearestFood > state.maxDepth && state.food.find(element => element.x == x && element.y == y)){
+    state.nearestFood = state.maxDepth;
+  }
 
-  counter = fillMatrix(matrix, y + 1, x, counter);
-  counter = fillMatrix(matrix, y - 1, x, counter);
-  counter = fillMatrix(matrix, y, x + 1 , counter);
-  counter = fillMatrix(matrix, y, x -1 , counter);
-  return counter;
+  state = fillMatrix(matrix, y + 1 , x, state, wrapped);
+  state = fillMatrix(matrix, y - 1 , x, state, wrapped);
+  state = fillMatrix(matrix, y, x + 1 , state, wrapped);
+  state = fillMatrix(matrix, y, x -1 , state, wrapped);
+  return state;
 }
 
 
-// Returns true if specified row and col coordinates are in the matrix
-function validCoordinates(matrix, row, col)
+// Returns true if specified row and col coordinates are in the matrix  -- DELETE ? Since I moduloed everything
+function validCoordinates(matrix, y, x)
 {
-  return (row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length);
+  return (y >= 0 && y < matrix.length && x >= 0 && x < matrix[y].length);
 }
 
 // Returns a matrix of specified number of rows and cols
