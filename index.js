@@ -21,7 +21,7 @@ function info() {
   return {
     apiversion: "1",
     author: "SamuelTenga",      
-    color: "#86b300", 
+    color: "#ff0000",
     head: "beach-puffin",  
     tail: "beach-puffin", 
   };
@@ -59,7 +59,7 @@ function end(gameState) {
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
   const food = gameState.board.food;
-  const wrapped= !!(gameState.game.ruleset.name == 'wrapped');
+  const wrapped= !!(gameState.game.ruleset.name === 'wrapped');
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
   const hungry = !!(gameState.you.health <= 50 || gameState.you.length <= boardHeight);
@@ -101,9 +101,10 @@ function move(gameState) {
   console.log("stateMatrix:");
   console.log(stateMatrix);
   let myLength = gameState.you.length;
-
+  let sortedBySurvival;
+  
   if(hungry){
-  var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
+  sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
     ([,a],[,b]) => {
     if (a.maxDepth === b.maxDepth){
       return a.nearestFood < b.nearestFood ? 1 : -1
@@ -112,7 +113,7 @@ function move(gameState) {
     }
   }));
   } else {
-    var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
+    sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
       ([,a],[,b]) => {
       if (a.maxDepth === b.maxDepth){
         return a.nearestFood < b.nearestFood ? -1 : 1
@@ -145,13 +146,13 @@ function fillMatrix(matrix, y, x, state, wrapped)
       return state;
   }
       
-  if (matrix[y][x] == 1)
+  if (matrix[y][x] === 1)
       return state;
   
   matrix[y][x] = 1;
   state.maxDepth++;
   //find nearest food
-  if(state.nearestFood > state.maxDepth && state.food.find(element => element.x == x && element.y == y)){
+  if(state.nearestFood > state.maxDepth && state.food.find(element => element.x === x && element.y === y)){
     state.nearestFood = state.maxDepth;
   }
 
