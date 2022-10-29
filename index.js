@@ -92,6 +92,8 @@ function move(gameState) {
   allBodies.push((gameState.board.hazards));
   var snakebodies =allBodies.flat(1);
   heads.forEach( head => {
+    console.log(head);
+    console.log(({x: head.x, y: head.y+1});
     snakebodies.push({x: head.x, y: head.y+1});
     snakebodies.push({x: head.x, y: head.y-1});
     snakebodies.push({x: head.x+1, y: head.y});
