@@ -42,7 +42,7 @@ class State {
     this.food = food;
   }
   
-  };
+  }
 
 // start is called when your Battlesnake begins a game
 function start(gameState) {
@@ -82,7 +82,7 @@ function move(gameState) {
   const myHead = gameState.you.head;
   var allBodies =[]; 
   var opponents = (gameState.board.snakes);
-  let heads = opponents.filter(x => x.id !== gameState.you.id).map(y => y.head);
+  let heads = opponents.filter(x => x.id !== gameState.you.id).map(y =>{ return y.head; });
   console.log("heads", JSON.stringify(heads));
   // console.log("opponents");
   // console.log(JSON.stringify(opponents));
