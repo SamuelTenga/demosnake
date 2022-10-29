@@ -84,8 +84,8 @@ function move(gameState) {
   var opponents = (gameState.board.snakes);
   let heads = opponents.filter(x => x.id !== gameState.you.id).map(y => y.head);
   console.log("heads", JSON.stringify(heads));
-  console.log("opponents");
-  console.log(JSON.stringify(opponents));
+  // console.log("opponents");
+  // console.log(JSON.stringify(opponents));
   opponents.forEach(element => {
     allBodies.push(element.body);
   });
@@ -105,9 +105,9 @@ function move(gameState) {
   stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down, wrapped);
   stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right, wrapped);
   stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left, wrapped);
-  console.log("stateMatrix:");
-  console.log(stateMatrix);
-  let myLength = gameState.you.length;
+  // console.log("stateMatrix:");
+  // console.log(stateMatrix);
+  // let myLength = gameState.you.length;
   let sortedBySurvival;
   
   if(hungry){
