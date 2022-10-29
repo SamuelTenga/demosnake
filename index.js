@@ -82,7 +82,7 @@ function move(gameState) {
   const myHead = gameState.you.head;
   var allBodies =[]; 
   var opponents = (gameState.board.snakes);
-  let heads = opponents.filter(x => x.id !== gameState.you.id).map(y =>{ return y.head; });
+  let heads = opponents.filter(x => x.id !== gameState.you.id || x.health < gameState.you.health).map(y =>{ return y.head; });
   console.log("heads", JSON.stringify(heads));
   // console.log("opponents");
   // console.log(JSON.stringify(opponents));
