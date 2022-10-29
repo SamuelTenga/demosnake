@@ -82,7 +82,7 @@ function move(gameState) {
   const myHead = gameState.you.head;
   var allBodies =[]; 
   var opponents = (gameState.board.snakes);
-  let heads = opponents.filter(x => x.id !== gameState.you.id && x.length > gameState.you.length).map(y =>{ return y.head; });
+  let heads = opponents.filter(x => x.id !== gameState.you.id && x.length >= gameState.you.length).map(y =>{ return y.head; });
   console.log("heads", JSON.stringify(heads));
   // console.log("opponents");
   // console.log(JSON.stringify(opponents));
@@ -100,7 +100,7 @@ function move(gameState) {
     snakebodies.push({x: head.x-1, y: head.y});
   });
 
-  //FLOODFILL 
+  //FLOODFILL
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
