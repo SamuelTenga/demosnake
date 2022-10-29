@@ -92,10 +92,10 @@ function move(gameState) {
   allBodies.push((gameState.board.hazards));
   var snakebodies =allBodies.flat(1);
   heads.forEach( head => {
-    snakebodies.push({x: head[x], y: head[y]+1});
-    snakebodies.push({x: head[x], y: head[y]-1});
-    snakebodies.push({x: head[x]+1, y: head[y]});
-    snakebodies.push({x: head[x]-1, y: head[y]});
+    snakebodies.push({x: head.x, y: head.y+1});
+    snakebodies.push({x: head.x, y: head.y-1});
+    snakebodies.push({x: head.x+1, y: head.y});
+    snakebodies.push({x: head.x-1, y: head.y});
   });
 
   //FLOODFILL 
