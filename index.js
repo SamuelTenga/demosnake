@@ -200,7 +200,7 @@ function generateMatrix(yMax, xMax, snakes)
   }
   // fill ones with ones
   snakes.forEach(hazzard => {
-    if(validCoordinates(matrix, hazzard.y, hazzard.x){
+    if(validCoordinates(matrix, hazzard.y, hazzard.x)){
       matrix[hazzard.y][hazzard.x] = 1;
     }
   });
