@@ -32,6 +32,8 @@ class State {
   maxDepth = 0;
   nearestFood = 999;
   food = [];
+  heads = new Set();
+  tails = new Set();
 
   constructor(food) {
     this.food = food;
