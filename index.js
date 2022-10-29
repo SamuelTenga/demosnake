@@ -131,10 +131,10 @@ function move(gameState) {
     }));
   }
   var safestMove = Object.keys(sortedBySurvival)[3];
-  console.log("sortedBySurviva:");
-  console.log(sortedBySurvival);
-  console.log("hungry:");
-  console.log(hungry);
+  // console.log("sortedBySurviva:");
+  // console.log(sortedBySurvival);
+  // console.log("hungry:");
+  // console.log(hungry);
 
   // Choose a random move from the safe moves
   console.log(`MOVE ${gameState.turn}: ${safestMove}`);
