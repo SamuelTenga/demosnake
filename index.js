@@ -21,7 +21,7 @@ function info() {
   return {
     apiversion: "1",
     author: "SamuelTenga",      
-    color: "#86b300", 
+    color: "#ff0000",
     head: "beach-puffin",  
     tail: "beach-puffin", 
   };
@@ -32,12 +32,17 @@ class State {
   maxDepth = 0;
   nearestFood = 999;
   food = [];
+  heads = new Set();
+  tails = new Set();
+  allheads = new Set();
+  alltails = new Set();
+  diff=0;
 
   constructor(food) {
     this.food = food;
   }
   
-  };
+  }
 
 // start is called when your Battlesnake begins a game
 function start(gameState) {
@@ -59,7 +64,7 @@ function end(gameState) {
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
   const food = gameState.board.food;
-  const wrapped= !!(gameState.game.ruleset.name == 'wrapped');
+  const wrapped= !!(gameState.game.ruleset.name === 'wrapped');
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
   const hungry = !!(gameState.you.health <= 50 || gameState.you.length <= boardHeight);
@@ -77,15 +82,25 @@ function move(gameState) {
   const myHead = gameState.you.head;
   var allBodies =[]; 
   var opponents = (gameState.board.snakes);
-
+  let heads = opponents.filter(x => x.id !== gameState.you.id && x.length >= gameState.you.length).map(y =>{ return y.head; });
+  console.log("heads", JSON.stringify(heads));
+  // console.log("opponents");
+  // console.log(JSON.stringify(opponents));
   opponents.forEach(element => {
     allBodies.push(element.body);
   });
   allBodies.push((gameState.board.hazards));
   var snakebodies =allBodies.flat(1);
+  heads.forEach( head => {
+    console.log(head);
+    console.log({x: head.x, y: head.y+1});
+    snakebodies.push({x: head.x, y: head.y+1});
+    snakebodies.push({x: head.x, y: head.y-1});
+    snakebodies.push({x: head.x+1, y: head.y});
+    snakebodies.push({x: head.x-1, y: head.y});
+  });
 
-
-  //FLOODFILL 
+  //FLOODFILL
   var upMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var downMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
   var leftMatrix = generateMatrix(boardHeight, boardWidth, snakebodies);
@@ -97,12 +112,13 @@ function move(gameState) {
   stateMatrix.down = fillMatrix(downMatrix, myHead.y - 1, myHead.x, stateMatrix.down, wrapped);
   stateMatrix.right = fillMatrix(rightMatrix, myHead.y, myHead.x + 1, stateMatrix.right, wrapped);
   stateMatrix.left = fillMatrix(leftMatrix, myHead.y, myHead.x - 1,stateMatrix.left, wrapped);
-  console.log("stateMatrix:");
-  console.log(stateMatrix);
-  let myLength = gameState.you.length;
-
+  // console.log("stateMatrix:");
+  // console.log(stateMatrix);
+  // let myLength = gameState.you.length;
+  let sortedBySurvival;
+  
   if(hungry){
-  var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
+  sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
     ([,a],[,b]) => {
     if (a.maxDepth === b.maxDepth){
       return a.nearestFood < b.nearestFood ? 1 : -1
@@ -111,7 +127,7 @@ function move(gameState) {
     }
   }));
   } else {
-    var sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
+    sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
       ([,a],[,b]) => {
       if (a.maxDepth === b.maxDepth){
         return a.nearestFood < b.nearestFood ? -1 : 1
@@ -122,10 +138,10 @@ function move(gameState) {
     }));
   }
   var safestMove = Object.keys(sortedBySurvival)[3];
-  console.log("sortedBySurviva:");
-  console.log(sortedBySurvival);
-  console.log("hungry:");
-  console.log(hungry);
+  // console.log("sortedBySurviva:");
+  // console.log(sortedBySurvival);
+  // console.log("hungry:");
+  // console.log(hungry);
 
   // Choose a random move from the safe moves
   console.log(`MOVE ${gameState.turn}: ${safestMove}`);
@@ -144,13 +160,13 @@ function fillMatrix(matrix, y, x, state, wrapped)
       return state;
   }
       
-  if (matrix[y][x] == 1)
+  if (matrix[y][x] === 1)
       return state;
   
   matrix[y][x] = 1;
   state.maxDepth++;
   //find nearest food
-  if(state.nearestFood > state.maxDepth && state.food.find(element => element.x == x && element.y == y)){
+  if(state.nearestFood > state.maxDepth && state.food.find(element => element.x === x && element.y === y)){
     state.nearestFood = state.maxDepth;
   }
 
@@ -184,7 +200,9 @@ function generateMatrix(yMax, xMax, snakes)
   }
   // fill ones with ones
   snakes.forEach(hazzard => {
-    matrix[hazzard.y][hazzard.x] = 1;
+    if(validCoordinates(matrix, hazzard.y, hazzard.x)){
+      matrix[hazzard.y][hazzard.x] = 1;
+    }
   });
   return matrix;
 }
