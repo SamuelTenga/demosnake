@@ -34,6 +34,9 @@ class State {
   food = [];
   heads = new Set();
   tails = new Set();
+  allheads = new Set();
+  alltails = new Set();
+  diff=0;
 
   constructor(food) {
     this.food = food;
