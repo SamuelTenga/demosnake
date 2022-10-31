@@ -20,7 +20,7 @@ function info() {
 
   return {
     apiversion: "1",
-    author: "SamuelTenga",      
+    author: "Samuel Tenga",      
     color: "#ffffff",
     head: "caffeine",  
     tail: "mlh-gene", 
