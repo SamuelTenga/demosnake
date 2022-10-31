@@ -23,7 +23,7 @@ function info() {
     author: "Samuel Tenga",      
     color: "#34eb62",
     head: "all-seeing",  
-    tail: "weight", 
+    tail: "weight",
   };
 }
 
