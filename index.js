@@ -20,10 +20,10 @@ function info() {
 
   return {
     apiversion: "1",
-    author: "SamuelTenga",      
-    color: "#ff0000",
-    head: "beach-puffin",  
-    tail: "beach-puffin", 
+    author: "Samuel Tenga",      
+    color: "#34eb62",
+    head: "all-seeing",  
+    tail: "weight", 
   };
 }
 
@@ -67,7 +67,7 @@ function move(gameState) {
   const wrapped= !!(gameState.game.ruleset.name === 'wrapped');
   const boardWidth = gameState.board.width;
   const boardHeight = gameState.board.height;
-  const hungry = !!(gameState.you.health <= 50 || gameState.you.length <= boardHeight);
+  const hungry = !!(gameState.you.length <= boardHeight*4);
   console.log("wrapped");
   console.log(wrapped);
   console.log("hungry");
@@ -127,6 +127,40 @@ function move(gameState) {
     }
   }));
   } else {
+    // left side, go down
+    if(myHead.x == 0 && myHead.y != 0){
+      return { move: 'down' };
+    }
+    // buttom down corner, go right
+    if(myHead.x == 0 && myHead.y == 0){
+      return { move: 'right' };
+    }
+    // buttom, go right
+    if(myHead.y == 0 && myHead.x != boardWidth-1){
+      return { move: 'right' };
+    }
+    // right downer corner, go up
+    if(myHead.x == boardWidth-1 && myHead.y == 0){
+      return { move: 'up' };
+    }
+    //right side, go up
+    if(myHead.x == boardWidth-1 && myHead.y != boardHeight-1){
+      return { move: 'up' };
+    }
+     // right upper corner, go left
+    if(myHead.x == boardWidth-1 && myHead.y == boardHeight-1){
+      return { move: 'left' };
+    }
+    // on top, go left
+    if(myHead.x != 0 && myHead.y == boardHeight-1){
+      return { move: 'left' };
+    }
+    // on top, go down
+    if(myHead.x == 0 && myHead.y == boardHeight-1){
+      return { move: 'down' };
+    }
+
+
     sortedBySurvival = Object.fromEntries(Object.entries(stateMatrix).sort(
       ([,a],[,b]) => {
       if (a.maxDepth === b.maxDepth){
