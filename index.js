@@ -21,7 +21,7 @@ function info() {
   return {
     apiversion: "1",
     author: "Samuel Tenga",      
-    color: "#ffffff",
+    color: "#34aeeb",
     head: "caffeine",  
     tail: "mlh-gene", 
   };
