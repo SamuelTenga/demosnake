@@ -21,9 +21,9 @@ function info() {
   return {
     apiversion: "1",
     author: "SamuelTenga",      
-    color: "#ff0000",
-    head: "beach-puffin",  
-    tail: "beach-puffin", 
+    color: "#ffffff",
+    head: "caffeine",  
+    tail: "mlh-gene", 
   };
 }
 
